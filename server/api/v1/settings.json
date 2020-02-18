@@ -1,0 +1,17 @@
+[
+    {
+        "databaseConnection": {
+            "host": "localhost",
+            "userName": "root",
+            "password": "",
+            "name": "weeblist"
+        },
+        "XMLQuerySettings": {
+            "topTenWatchedAnimeQuery":{
+                "root": "<watched/>",
+                "node1": "<animeId>",
+                "node2": "<watchCount>"
+            }
+        }
+    }
+]

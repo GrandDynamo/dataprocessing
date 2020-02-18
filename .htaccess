@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ server/api/v1/apiHandler.php/?$1 [QSA,NC,L]
+#RewriteRule ^(.*)$ server/index.php?url=/$1 [QSA,L] 
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ server/api/v1/index.php?/$1 [L]
+#RewriteRule ^(.*)$ server/index.php?url=/$1 [QSA,L]
+#RewriteRule ^server/api/v1/([0-9a-zA-Z_-]*)$ server/index.php?order_id=$1 [NC,L]
+#RewriteRule ^api/([0-9a-zA-Z_-]*)$ apiHandler.php?category=$1 [NC,L]
+</IfModule>
