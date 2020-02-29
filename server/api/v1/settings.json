@@ -1,17 +1,21 @@
-[
-    {
-        "databaseConnection": {
-            "host": "localhost",
-            "userName": "root",
-            "password": "",
-            "name": "weeblist"
+{
+    "databaseConnection": {
+        "host": "localhost",
+        "userName": "root",
+        "password": "",
+        "name": "weeblist"
+    },
+    "querySettings": {
+        "topTenWatchedAnimeQuery": {
+            "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS views FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
+            "groupedNode": "anime"
         },
-        "XMLQuerySettings": {
-            "topTenWatchedAnimeQuery":{
-                "root": "<watched/>",
-                "node1": "<animeId>",
-                "node2": "<watchCount>"
-            }
+        "totalMaleFemaleWeebs": {
+            "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
+            "groupedNode": "genders"
+        },
+        "topTenWatchedAnimeQuery3": {
+            "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS bruh FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY bruh DESC LIMIT 10"
         }
     }
-]
+}

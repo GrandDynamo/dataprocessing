@@ -15,10 +15,13 @@ class APIFactory
 {
     private mysqli $connection;
     private array $dbSettings;
+    private array $querySetting;
 
     public function __construct()
     {
+
         $this->loadDatabaseSettings();
+        $this->loadQuerySettings();
         $this->establishDatabaseConnection();
     }
 
@@ -31,7 +34,20 @@ class APIFactory
     {
         $readSettings = new ReadSettings();
         $readSettings->readFile('settings.json');
-        $this->dbSettings = $readSettings->getSettingsInCategory('databaseConnection');
+
+        $this->dbSettings = ($readSettings->getSettingsArray())['databaseConnection'];
+    }
+    /**
+     * Loads the queries including 
+     *
+     * @return void
+     */
+    private function loadQuerySettings(): void
+    {
+        $readSettings = new ReadSettings();
+        $readSettings->readFile('settings.json');
+        $xmlsettings = $readSettings->getSettingsArray();
+        $this->querySetting = $xmlsettings['querySettings'];
     }
 
     /**
@@ -56,15 +72,18 @@ class APIFactory
      * @param [type] ...$queryParams
      * @return void
      */
-    public function getXMLFromQuery(string $query, array $nodeNames, ...$queryParams)
+    // public function getXMLFromQuery(string $query, array $XMLNodes, ...$queryParams)
+    public function printXMLFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
-        $mySQL->executeQuery($query, ...$queryParams);
+        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
         // echo "<pre>";
         // var_dump($mySQL->getResult());
         // echo "</pre>";
         $parse = new XMLParser();
         $array = $mySQL->getResult();
-        $parse->parseArray($array, array());
+        $parse->parseArrayToXML($array, $this->querySetting[$queryName]['groupedNode']);
+        echo $parse->getParsedContent();
+        header('Content-Type: application/xml; charset=utf-8');
     }
 }

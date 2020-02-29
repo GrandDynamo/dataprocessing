@@ -24,14 +24,14 @@ class ReadSettings implements Readable
     }
 
     /**
-     * Returns settings from specified category.
+     * Returns settings in array form.
      *
      * @param string $settingCategory The category where certain settings fall under.
      * @return array Settings Contains settings.
      */
-    public function getSettingsInCategory(string $settingCategory): array
+    public function getSettingsArray(): array
     {
         $specificSettings = json_decode($this->contents, true);
-        return $specificSettings[0][$settingCategory];
+        return $specificSettings;
     }
 }

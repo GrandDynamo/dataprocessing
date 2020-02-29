@@ -37,7 +37,7 @@ class MySQL
             $stmt->bind_param($typesString, ...$queryParams);
         }
         $stmt->execute();
-        $this->result = $stmt->get_result()->fetch_all();
+        $this->result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     /**

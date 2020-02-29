@@ -1,6 +1,6 @@
 <?php
 
-namespace parsers;
+namespace classes\parsers;
 
 /**
  * Class for parsing things into a JSON format.

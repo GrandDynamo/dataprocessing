@@ -6,9 +6,9 @@ $categories = array('animeData', 'userData');
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-if (!in_array($uri[4], $categories)) {
+if (!in_array($uri[3], $categories)) {
     header('HTTP/1.1 400 Bad request - Something in wrong with the URL.', true, 400);
-    die('The category ' . $uri[4] . ' does not exist.');
+    die('The category ' . $uri[3] . ' does not exist.');
 }
 // use connections\Database;
 
@@ -56,7 +56,6 @@ $apiFactory = new APIFactory();
 // $apiFactory->getXMLFromQuery($query2, 10);
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
-$apiFactory->getXMLFromQuery("SELECT anime_id, COUNT(ratinglist.user_id) AS bruh
-FROM `ratinglist` 
-GROUP BY ratinglist.anime_id
-ORDER BY bruh DESC", array('toberemoved'));
+
+$apiFactory->printXMLFromQuery("topTenWatchedAnimeQuery", 12);
+// $apiFactory->printXMLFromQuery("totalMaleFemaleWeebs");
