@@ -3,7 +3,7 @@
 namespace factories;
 
 use classes\{fileManager\readers\ReadSettings, queryLanguages\MySQL};
-
+use classes\parsers\JSONParser;
 use mysqli;
 use classes\parsers\XMLParser;
 
@@ -69,7 +69,7 @@ class APIFactory
      * Retrieves a XML structured string from a query.
      *
      * @param string $query
-     * @param [type] ...$queryParams
+     * @param mixed ...$queryParams
      * @return void
      */
     // public function getXMLFromQuery(string $query, array $XMLNodes, ...$queryParams)
@@ -82,8 +82,30 @@ class APIFactory
         // echo "</pre>";
         $parse = new XMLParser();
         $array = $mySQL->getResult();
-        $parse->parseArrayToXML($array, $this->querySetting[$queryName]['groupedNode']);
+        $parse->parseArray($array, $this->querySetting[$queryName]['groupedNode']);
         echo $parse->getParsedContent();
         header('Content-Type: application/xml; charset=utf-8');
+    }
+
+    /**
+     * Retrieves a JSON structured string from a query.
+     *
+     * @param string $query
+     * @param mixed ...$queryParams
+     * @return void
+     */
+    public function printJSONFromQuery(string $queryName, ...$queryParams)
+    {
+        $mySQL = new MySQL($this->connection);
+        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
+        // echo "<pre>";
+        // var_dump($mySQL->getResult());
+        // echo "</pre>";
+        $parse = new JSONParser();
+        $array = $mySQL->getResult();
+        $parse->parseArray($array);
+        header("Content-type: application/json; charset=utf-8");
+        echo $parse->getParsedContent();
+        
     }
 }

@@ -6,8 +6,8 @@
         "name": "weeblist"
     },
     "querySettings": {
-        "topTenWatchedAnimeQuery": {
-            "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS views FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
+        "topWatchedAnime": {
+            "query": "SELECT animelist.name, COUNT(ratinglist.user_id) AS views, AVG(ratinglist.rating) AS rating, animelist.episodes FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
             "groupedNode": "anime"
         },
         "totalMaleFemaleWeebs": {
@@ -16,6 +16,9 @@
         },
         "topTenWatchedAnimeQuery3": {
             "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS bruh FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY bruh DESC LIMIT 10"
+        },
+        "genderStatsAnime": {
+            
         }
     }
 }

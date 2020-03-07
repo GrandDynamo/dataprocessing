@@ -7,8 +7,10 @@ namespace classes\parsers;
  */
 class JSONParser extends Parser
 {
+    private ?string $JSONString;
     public function __construct()
     {
+        $this->JSONString = null;
     }
 
     /**
@@ -19,6 +21,7 @@ class JSONParser extends Parser
      */
     public function parseArray(array $array): void
     {
+        $this->JSONString = json_encode($array);
     }
 
     /**
@@ -28,6 +31,6 @@ class JSONParser extends Parser
      */
     public function getParsedContent(): string
     {
-        return "";
+        return $this->JSONString;
     }
 }

@@ -14,7 +14,7 @@ abstract class Parser
      * @param array $array
      * @return void
      */
-    public abstract function parseArrayToXML(array $array, string $groupedNode): void;
+    public abstract function parseArray(array $array): void;
 
     /**
      * Get the parsed content.

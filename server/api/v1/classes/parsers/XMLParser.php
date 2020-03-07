@@ -23,16 +23,13 @@ class XMLParser extends Parser
      * @param array $array
      * @return void
      */
-    public function parseArrayToXML(array $content, string $groupedNodeName): void
+    public function parseArray(array $array, string $groupedNodeName): void
     {
         $this->groupedNodeName = $groupedNodeName;
        
-        $this->XMLTree = $this->generateXMLTree($content);
+        $this->XMLTree = $this->generateXMLTree($array);
         
     }
-
-    // echo $xml->asXML();
-    // $this->arrayToXml($content);
    
 
     private function generateXMLTree($array, $rootElement = null, $xml = null)

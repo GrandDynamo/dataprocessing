@@ -2,7 +2,7 @@
 
 use factories\APIFactory;
 
-$categories = array('animeData', 'userData');
+$categories = array('topAnime', 'userData', "toptenWatchedAnime");
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
@@ -57,5 +57,6 @@ $apiFactory = new APIFactory();
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
 
-$apiFactory->printXMLFromQuery("topTenWatchedAnimeQuery", 12);
-// $apiFactory->printXMLFromQuery("totalMaleFemaleWeebs");
+// $apiFactory->printXMLFromQuery("topWatchedAnime", 12);
+$apiFactory->printJSONFromQuery("topWatchedAnime", 12);
+// $apiFactory->printJSONFromQuery("totalMaleFemaleWeebs");
