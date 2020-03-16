@@ -19,7 +19,6 @@ class APIFactory
 
     public function __construct()
     {
-
         $this->loadDatabaseSettings();
         $this->loadQuerySettings();
         $this->establishDatabaseConnection();
@@ -73,7 +72,7 @@ class APIFactory
      * @return void
      */
     // public function getXMLFromQuery(string $query, array $XMLNodes, ...$queryParams)
-    public function printXMLFromQuery(string $queryName, ...$queryParams)
+    public function getXMLFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
         $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
@@ -94,7 +93,7 @@ class APIFactory
      * @param mixed ...$queryParams
      * @return void
      */
-    public function printJSONFromQuery(string $queryName, ...$queryParams)
+    public function getJSONFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
         $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);

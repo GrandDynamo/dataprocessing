@@ -3,10 +3,10 @@
 use factories\APIFactory;
 
 $categories = array('topAnime', 'userData', "toptenWatchedAnime");
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uriArray = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-if (!in_array($uri[3], $categories)) {
+$uriArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+if (!in_array($uriArray[3], $categories)) {
     header('HTTP/1.1 400 Bad request - Something in wrong with the URL.', true, 400);
     die('The category ' . $uri[3] . ' does not exist.');
 }
@@ -27,20 +27,32 @@ spl_autoload_register(function ($class) {
 //     $database->getLimitedTopWatchedAnime($limit);
 // }
 
+
 // var_dump($database);
 // print_r($database);
 // echo $database->asXML();
 
+
 // echo "<pre>";
-// var_dump(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
+// var_dump($uriArray);
 // echo "</pre>";
 
+// echo json_encode($uriArray);
+
 
 
 
 // APIFactory::setDatabaseConnection();
 // APIFactory::setDatabaseConnection();
+
+
+
 $apiFactory = new APIFactory();
+
+
+
+
+
 // $apiFactory->getXMLFromQuery("SELECT
 // count(user_id) AS Total, 
 // (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, 
@@ -57,6 +69,11 @@ $apiFactory = new APIFactory();
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
 
-// $apiFactory->printXMLFromQuery("topWatchedAnime", 12);
-$apiFactory->printJSONFromQuery("topWatchedAnime", 12);
+$apiFactory->getXMLFromQuery("getTopWatchedAnime", 12);
+
+
+// $apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);
+// $apiFactory->getJSONFromQuery("addAnime");
+
+
 // $apiFactory->printJSONFromQuery("totalMaleFemaleWeebs");

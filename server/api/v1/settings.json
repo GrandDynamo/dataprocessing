@@ -6,19 +6,22 @@
         "name": "weeblist"
     },
     "querySettings": {
-        "topWatchedAnime": {
+        "getTopWatchedAnime": {
             "query": "SELECT animelist.name, COUNT(ratinglist.user_id) AS views, AVG(ratinglist.rating) AS rating, animelist.episodes FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
             "groupedNode": "anime"
         },
-        "totalMaleFemaleWeebs": {
+        "getTotalMaleFemaleWeebs": {
             "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
             "groupedNode": "genders"
         },
-        "topTenWatchedAnimeQuery3": {
+        "getTopTenWatchedAnimeQuery3": {
             "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS bruh FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY bruh DESC LIMIT 10"
         },
-        "genderStatsAnime": {
+        "getUsers": {
             
+        },
+        "addAnime": {
+            "query": "INSERT INTO `animelist`(`name`, `genre`, `type`, `episodes`, `rating`, `members`) VALUES ('testAnimeInsert','Romance, Isekai','TV',12,10,4269)"
         }
     }
 }

@@ -11,6 +11,7 @@ class MySQL
 {
     private mysqli $connection;
     private array $result = array();
+    private $test;
 
     /**
      * Uses the mysqli connection to execute queries.
@@ -38,6 +39,7 @@ class MySQL
         }
         $stmt->execute();
         $this->result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        // echo $this->result;
     }
 
     /**
