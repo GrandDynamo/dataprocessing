@@ -19,7 +19,7 @@ abstract class Parser
     /**
      * Get the parsed content.
      *
-     * @return void
+     * @return string
      */
     public abstract function getParsedContent(): string;
 }

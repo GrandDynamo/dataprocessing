@@ -12,11 +12,13 @@ class XMLParser extends Parser
     private ?string $groupedNodeName;
     private ?string $XMLTree;
     private string $rootNodeName;
+    
     public function __construct(string $rootNodeName, string $groupedNodeName)
     {
         $this->groupedNodeName = null;
         $this->XMLTree = null;
         $this->rootNodeName = $rootNodeName;
+        $this->groupedNodeName = $groupedNodeName;
     }
 
     /**
@@ -29,7 +31,7 @@ class XMLParser extends Parser
     {
         $this->XMLTree = $this->generateXMLTree($array);
     }
-   
+
 
     private function generateXMLTree($array, $rootElement = null, $xml = null)
     {
@@ -37,7 +39,7 @@ class XMLParser extends Parser
 
         // When root isnt defined use predefined root.
         if ($_xml === null) {
-            $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<'.$this->rootNodeName.'/>');
+            $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<' . $this->rootNodeName . '/>');
         }
 
         // Visit all key value pair 
@@ -45,7 +47,7 @@ class XMLParser extends Parser
 
             // If there is nested array then 
             if (is_array($v)) {
-                  $k = $this->groupedNodeName;
+                $k = $this->groupedNodeName;
                 // Call function for nested array 
                 $this->generateXMLTree($v, $k, $_xml->addChild($k));
             } else {

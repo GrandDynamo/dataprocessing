@@ -1,5 +1,4 @@
 <?php
-
 use factories\APIFactory;
 
 $categories = array('topAnime', 'userData', "toptenWatchedAnime");
@@ -69,7 +68,7 @@ $apiFactory = new APIFactory();
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
 
-$apiFactory->getXMLFromQuery("getTopWatchedAnime", 12);
+$apiFactory->getXMLFromQuery("getUserRatings", 10044);
 
 
 // $apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);

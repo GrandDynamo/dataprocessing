@@ -34,7 +34,7 @@ class APIFactory
         $readSettings = new ReadSettings();
         $readSettings->readFile('settings.json');
 
-        $this->dbSettings = ($readSettings->getSettingsArray())['databaseConnection'];
+        $this->dbSettings = ($readSettings->getSettingsArray())['dbConnectionSettings'];
     }
     /**
      * Loads the queries including 
@@ -79,11 +79,13 @@ class APIFactory
         // echo "<pre>";
         // var_dump($mySQL->getResult());
         // echo "</pre>";
-        $parse = new XMLParser();
         $array = $mySQL->getResult();
-        $parse->parseArray($array, $this->querySetting[$queryName]['groupedNode']);
-        echo $parse->getParsedContent();
+        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName']);   
+        $parse->parseArray($array);
+        //Sending header information.
         header('Content-Type: application/xml; charset=utf-8');
+        echo $parse->getParsedContent();
+       
     }
 
     /**

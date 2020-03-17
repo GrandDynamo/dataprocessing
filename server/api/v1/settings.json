@@ -1,24 +1,73 @@
 {
-    "databaseConnection": {
+    "dbConnectionSettings": {
         "host": "localhost",
         "userName": "root",
         "password": "",
-        "name": "weeblist"
+        "name": "anime-db"
     },
     "querySettings": {
         "getTopWatchedAnime": {
             "query": "SELECT animelist.name, COUNT(ratinglist.user_id) AS views, AVG(ratinglist.rating) AS rating, animelist.episodes FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
-            "groupedNode": "anime"
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
         },
-        "getTotalMaleFemaleWeebs": {
+        "getNumberOfMaleFemaleUsers": {
             "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
-            "groupedNode": "genders"
-        },
-        "getTopTenWatchedAnimeQuery3": {
-            "query": "SELECT anime_id, COUNT(ratinglist.user_id) AS bruh FROM `ratinglist` GROUP BY ratinglist.anime_id ORDER BY bruh DESC LIMIT 10"
+            "XMLSettings": {
+                "groupedNodeName": "gendersUsers",
+                "rootNodeName": "root"
+            }
         },
         "getUsers": {
-            
+            "query": "SELECT user_id AS userId, username, birth_date AS birthDate, gender, `location` FROM userlist",
+            "XMLSettings": {
+                "groupedNodeName": "users",
+                "rootNodeName": "root"
+            }
+        },
+        "getUser": {
+            "query": "SELECT user_id AS userId, username, birth_date AS birthDate, gender, `location` FROM userlist WHERE user_id = ?",
+            "XMLSettings": {
+                "groupedNodeName": "user",
+                "rootNodeName": "root"
+            }
+        },
+        "getAnimes": {
+            "query": "SELECT anime_id AS animeId, name, genre, type, episodes FROM animelist",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getAnime": {
+            "query": "SELECT anime_id AS animeId, name, genre, type, episodes FROM animelist WHERE anime_id = ?",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getRatings": {
+            "query": "SELECT * FROM `ratinglist` ORDER BY `user_id`",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getAnimeRatings": {
+            "query": "SELECT * FROM `ratinglist` WHERE `anime_id` = ? AND `rating` > 1",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getUserRatings": {
+            "query": "SELECT * FROM `ratinglist` WHERE `user_id` = ? AND `rating` > 1",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
         },
         "addAnime": {
             "query": "INSERT INTO `animelist`(`name`, `genre`, `type`, `episodes`, `rating`, `members`) VALUES ('testAnimeInsert','Romance, Isekai','TV',12,10,4269)"
