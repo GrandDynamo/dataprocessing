@@ -3,7 +3,6 @@
 namespace classes\parsers;
 
 use SimpleXMLElement;
-
 /**
  * Class that parses things into a XML format.
  */
@@ -12,7 +11,7 @@ class XMLParser extends Parser
     private ?string $groupedNodeName;
     private ?string $XMLTree;
     private string $rootNodeName;
-    
+
     public function __construct(string $rootNodeName, string $groupedNodeName)
     {
         $this->groupedNodeName = null;

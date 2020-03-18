@@ -68,7 +68,7 @@ $apiFactory = new APIFactory();
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
 
-$apiFactory->getXMLFromQuery("getUserRatings", 10044);
+$apiFactory->getJSONFromQuery("getUserRatings", 10044);
 
 
 // $apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);

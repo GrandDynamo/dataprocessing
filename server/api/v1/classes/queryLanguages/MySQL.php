@@ -44,7 +44,7 @@ class MySQL
     /**
      * Creates a string of parameter types for binding parameters.
      *
-     * @param [type] ...$queryParams
+     * @param mixed ...$queryParams
      * @return string
      */
     private function createBindingTypeString(...$queryParams): string

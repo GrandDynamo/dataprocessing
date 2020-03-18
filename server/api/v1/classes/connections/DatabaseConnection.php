@@ -1,5 +1,4 @@
 <?php
-
 namespace classes\connections;
 
 use Exception;
@@ -13,7 +12,7 @@ class DatabaseConnection
     public function __construct(string $host, string $user, string $password, string $databaseName)
     {
         $this->establishConnection($host, $user, $password, $databaseName);
-        return $this->$connection;
+        return $this->connection;
     }
 
     public function establishConnection(string $host, string $user, string $password, string $databaseName): void
