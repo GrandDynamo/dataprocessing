@@ -105,6 +105,7 @@ class APIFactory
         $parse = new JSONParser();
         $array = $mySQL->getResult();
         $parse->parseArray($array);
+        header('Link: <http://example.com/my-book.json>; rel="describedby"');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
         

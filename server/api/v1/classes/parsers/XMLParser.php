@@ -31,7 +31,6 @@ class XMLParser extends Parser
         $this->XMLTree = $this->generateXMLTree($array);
     }
 
-
     private function generateXMLTree($array, $rootElement = null, $xml = null)
     {
         $_xml = $xml;

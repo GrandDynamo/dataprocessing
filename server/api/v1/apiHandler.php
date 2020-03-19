@@ -1,14 +1,18 @@
 <?php
+
 use factories\APIFactory;
+use classes\routing\{Request, Router};
 
 $categories = array('topAnime', 'userData', "toptenWatchedAnime");
-$uriArray = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// $uriArray = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// $uriArray = parse_url($_SERVER['QUERY_STRING']);
 
 $uriArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-if (!in_array($uriArray[3], $categories)) {
-    header('HTTP/1.1 400 Bad request - Something in wrong with the URL.', true, 400);
-    die('The category ' . $uri[3] . ' does not exist.');
-}
+// $uriArray = explode('/', trim($_SERVER['QUERY_STRING'], '/'));
+// if (!in_array($uriArray[3], $categories)) {
+//     header('HTTP/1.1 400 Bad request - Something in wrong with the URL.', true, 400);
+//     die('The category ' . $uri[3] . ' does not exist.');
+// }
 // use connections\Database;
 
 spl_autoload_register(function ($class) {
@@ -38,13 +42,11 @@ spl_autoload_register(function ($class) {
 
 // echo json_encode($uriArray);
 
+// $router  = new Router(new Request);
 
-
-
-// APIFactory::setDatabaseConnection();
-// APIFactory::setDatabaseConnection();
-
-
+// $router->get('/dataprocessing/api/', function () {
+//     return "yeeet";
+// });
 
 $apiFactory = new APIFactory();
 
@@ -68,10 +70,10 @@ $apiFactory = new APIFactory();
 
 // $apiFactory->getXMLFromQuery("SELECT name FROM animelist WHERE anime_id > 1 LIMIT ?", 10);
 
-$apiFactory->getJSONFromQuery("getUserRatings", 10044);
+// $apiFactory->getJSONFromQuery("getUserRatings", 10044);
 
 
-// $apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);
+$apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);
 // $apiFactory->getJSONFromQuery("addAnime");
 
 
