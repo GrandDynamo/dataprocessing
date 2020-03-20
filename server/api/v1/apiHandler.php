@@ -42,11 +42,21 @@ spl_autoload_register(function ($class) {
 
 // echo json_encode($uriArray);
 
-// $router  = new Router(new Request);
+$router  = new Router(new Request);
+$id = 3;
+$router->get('/dataprocessing/api/{id}', function ($id) {
+    return "option 1";
+});
+$router->get('/dataprocessing/api/', function () {
+    return "option2";
+});
+$router->get('/dataprocessing/api/test/{ok}', function ($id) {
+    return "option3";
+});
+$router->get('/dataprocessing/api/no/2', function ($ok) {
+    return "option4";
+});
 
-// $router->get('/dataprocessing/api/', function () {
-//     return "yeeet";
-// });
 
 $apiFactory = new APIFactory();
 
@@ -73,7 +83,7 @@ $apiFactory = new APIFactory();
 // $apiFactory->getJSONFromQuery("getUserRatings", 10044);
 
 
-$apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);
+// $apiFactory->getJSONFromQuery("getTopWatchedAnime", 12);
 // $apiFactory->getJSONFromQuery("addAnime");
 
 

@@ -17,9 +17,16 @@ class Router
 
     function __call($name, $args)
     {
-        list($route, $method) = $args;
+        //BAKA!! <///////////> code.
+        // list($route, $method) = $args;
 
+
+
+        //GUCCI code
+        $route = $args[0];
+        $method = $args[1];
         if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
+            echo "yeeeeeeee";
             $this->invalidMethodHandler();
         }
 
@@ -28,6 +35,7 @@ class Router
 
     /**
      * Removes trailing forward slashes from the right of the route.
+     * 
      * @param route (string)
      */
     private function formatRoute($route)
@@ -56,8 +64,82 @@ class Router
     {
         $methodDictionary = $this->{strtolower($this->request->requestMethod)};
         $formatedRoute = $this->formatRoute($this->request->requestUri);
-        $method = $methodDictionary[$formatedRoute];
 
+
+        //<<<<<<<<<<<<<<<<<<<<MY TESTING CODE>>>>>>>>>>>>>>>>>>>>>>>>
+        $arr1 = array(0 => "numberzero", 1 => "numberone", 5 => "numberfive", 6 => "numberzes");
+        $arr2 = array(0 => "numberzero", 1 => "numberone", 7 => "numberfive", 6 => "numberzes");
+
+        if ($arr1 === $arr2) {
+            var_dump("GELIJK");
+        }
+
+        //Loops through de dictionary.
+        $uriArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $newMethod = "";
+        foreach ($methodDictionary as $method => $value) {
+            echo "<br>";
+            echo '<b>FOREACH $methodDictionary</b>';
+            echo "<br>";
+            echo "<pre>";
+            var_dump($method);
+            echo "</pre>";
+
+            $routedArray = explode('/', trim($method, '/'));
+            echo '<b>$routedArray</b>';
+            echo "<pre>";
+            var_dump($routedArray);
+            echo "</pre>";
+            foreach ($routedArray as $key => $value) {
+                //  $lel = false;
+                // // $lel = preg_match('/{(.*?)}/', $value);
+                echo " Key: " . $key . "<br>";
+                if (preg_match('/{(.*?)}/', $value)) {
+                    // array_push($replacementItemsArr, $key => $value);
+                    // array_replace($routedArray, $key => $value);
+                    $routedArray[$key] = $uriArray[$key];
+                    // echo "yeet";
+                }
+                /**
+                 * @todo Fixen dat elke method exploded word en key voor key compared wordt tegen de user ingevoerde exploded url. 
+                 * dan checked die per index value elke interation. Wanneer die bij een {} uitkomt wordt het sws true tenzij de user url natuurlijk leeg is.
+                 * Als er iets op false komt exit die deze iteratie en gaat die door de naar volgende.
+                 * 
+                 */
+            }
+        }
+
+        $routedArray = implode("/", $routedArray);
+        $formatedRoute = "/" . $routedArray;
+        $methodDictionary[$formatedRoute] = $methodDictionary["/dataprocessing/api/test/{ok}"];
+        unset($methodDictionary["/dataprocessing/api/test/{ok}"]);
+        var_dump($formatedRoute);
+        // $matches  = preg_match('/{(.*?)}/', $routedArray);
+
+        // print_r($matches);
+        echo "<br>";
+        echo "<br>";
+        echo '<b>$uriArray</b>';
+        echo "<br>";
+        echo "<pre>";
+        var_dump($uriArray);
+        echo "</pre>";
+        echo '<b>$methodDictionary</b>';
+        echo "<br>";
+        echo "<pre>";
+        var_dump($methodDictionary);
+        echo "</pre>";
+        echo '<b>$formatedRoute</b>';
+        echo "<br>";
+        var_dump($formatedRoute);
+        $method = $methodDictionary[$formatedRoute];
+        echo "<br>";
+        echo "</pre>";
+        echo '<b>$method</b>';
+        echo "<br>";
+        echo "<pre>";
+        echo var_dump($methodDictionary);
+        echo "</pre>";
         if (is_null($method)) {
             $this->defaultRequestHandler();
             return;
@@ -69,6 +151,5 @@ class Router
     function __destruct()
     {
         $this->resolve();
-        
     }
 }
