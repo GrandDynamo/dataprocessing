@@ -43,20 +43,27 @@ spl_autoload_register(function ($class) {
 // echo json_encode($uriArray);
 
 $router  = new Router(new Request);
-$id = 3;
-$router->get('/dataprocessing/api/{id}', function ($id) {
+$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}', function () {
     return "option 1";
 });
-$router->get('/dataprocessing/api/', function () {
+$router->get('/dataprocessing/api/v1/animes/{id}', function () {
     return "option2";
 });
 $router->get('/dataprocessing/api/test/{ok}', function ($id) {
     return "option3";
 });
-$router->get('/dataprocessing/api/no/2', function ($ok) {
+$router->get('/dataprocessing/api/test', function ($ok) {
     return "option4";
 });
-
+$router->get('/dataprocessing/api/wow/{id}', function ($id) {
+    return "option 5";
+});
+$router->get('/dataprocessing/api/nani/', function ($nani) {
+    return "option6";
+});
+$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow2', function () {
+    return "option 7";
+});
 
 $apiFactory = new APIFactory();
 

@@ -78,28 +78,53 @@ class Router
         $uriArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $newMethod = "";
         foreach ($methodDictionary as $method => $value) {
-            echo "<br>";
-            echo '<b>FOREACH $methodDictionary</b>';
-            echo "<br>";
-            echo "<pre>";
-            var_dump($method);
-            echo "</pre>";
+            // echo "<br>";
+            // echo '<b>FOREACH $methodDictionary</b>';
+            // echo "<br>";
+            // echo "<pre>";
+            // var_dump($method);
+            // echo "</pre>";
+            // echo "<br>";
 
+            // echo '<b>$uriArray</b>';
+            // echo "<pre>";
+            // var_dump($uriArray);
+            // echo "</pre>";
+            // echo "<br>";
+
+            // echo '<b>$routedArray</b>';
+            // echo "<pre>";
             $routedArray = explode('/', trim($method, '/'));
-            echo '<b>$routedArray</b>';
-            echo "<pre>";
-            var_dump($routedArray);
-            echo "</pre>";
+            // echo "<pre>";
+            // var_dump($routedArray);
+            // echo "</pre>";
+
+            $i = 0;
             foreach ($routedArray as $key => $value) {
-                //  $lel = false;
-                // // $lel = preg_match('/{(.*?)}/', $value);
-                echo " Key: " . $key . "<br>";
-                if (preg_match('/{(.*?)}/', $value)) {
-                    // array_push($replacementItemsArr, $key => $value);
-                    // array_replace($routedArray, $key => $value);
+                // $i++;
+                // if($i > 100){
+                //     // return;
+                //     // exit;
+                //     continue;
+                // }
+
+                if ($routedArray[$key] === $uriArray[$key]) {
+                    echo " <b>Key:</b> " . $key . " <b>Value:</b> " . $value;
+                    echo " | Same key value <br>";
+                    // continue;
+                // break;
+                } elseif (preg_match('/{(.*?)}/', $value)) {
+                    echo " <b>Key:</b> " . $key . " <b>Value:</b> " . $value;
+                    echo " | FOUND variable value <br>";
                     $routedArray[$key] = $uriArray[$key];
-                    // echo "yeet";
                 }
+
+                // if (preg_match('/{(.*?)}/', $value)) {
+                //     // array_push($replacementItemsArr, $key => $value);
+                //     // array_replace($routedArray, $key => $value);
+                //     $routedArray[$key] = $uriArray[$key];
+                //     // echo "yeet";
+                // }
                 /**
                  * @todo Fixen dat elke method exploded word en key voor key compared wordt tegen de user ingevoerde exploded url. 
                  * dan checked die per index value elke interation. Wanneer die bij een {} uitkomt wordt het sws true tenzij de user url natuurlijk leeg is.
@@ -107,39 +132,79 @@ class Router
                  * 
                  */
             }
+            if ($routedArray === $uriArray) {
+
+                echo "<h1>GELIJK</h1>";
+                // echo " <b>Key:</b> " . $key . " <b>Value:</b> " . $value;
+                $routedArray = implode("/", $routedArray);
+                $formatedRoute = "/" . $routedArray;
+                // echo "<br>";
+                // echo $routedArray;
+                // echo "<br>";
+                // $methodDictionary[$formatedRoute] = $methodDictionary["/dataprocessing/api/v1/animes"];
+                echo "<br>";
+                echo "<h2>Method dictionary before</h2>";
+                echo "<pre>";
+                var_dump($methodDictionary);
+                echo "</pre>";
+                echo "<br>";
+                //Checked if the key exists. Routes without variables wont go in here.
+                if (isset($methodDictionary[$method])) {
+                    if ($methodDictionary[$formatedRoute] != $methodDictionary[$method]) {
+                        $methodDictionary[$formatedRoute] = $methodDictionary[$method];
+                        var_dump($method);
+                        unset($methodDictionary[$method]);
+                    }
+                }
+
+
+                echo "<br>";
+                echo "<h2>Method dictionary after</h2>";
+                echo "<pre>";
+                var_dump($methodDictionary);
+                echo "</pre>";
+                echo "<br>";
+
+
+                // var_dump($formatedRoute);
+                break;
+            }
+            // echo "<hr><h2>RoutedArray After loop</h2>";
+            // var_dump($routedArray);
+            // echo "<hr>";
+            // echo "<hr><h2>RoutedArray After loop</h2>";
+            // var_dump($uriArray);
+            // echo "<hr>";
         }
 
-        $routedArray = implode("/", $routedArray);
-        $formatedRoute = "/" . $routedArray;
-        $methodDictionary[$formatedRoute] = $methodDictionary["/dataprocessing/api/test/{ok}"];
-        unset($methodDictionary["/dataprocessing/api/test/{ok}"]);
-        var_dump($formatedRoute);
+
         // $matches  = preg_match('/{(.*?)}/', $routedArray);
 
-        // print_r($matches);
-        echo "<br>";
-        echo "<br>";
-        echo '<b>$uriArray</b>';
-        echo "<br>";
-        echo "<pre>";
-        var_dump($uriArray);
-        echo "</pre>";
-        echo '<b>$methodDictionary</b>';
-        echo "<br>";
-        echo "<pre>";
-        var_dump($methodDictionary);
-        echo "</pre>";
-        echo '<b>$formatedRoute</b>';
-        echo "<br>";
-        var_dump($formatedRoute);
+        // // print_r($matches);
+        // echo "<br>";
+        // echo "<br>";
+        // echo '<b>$uriArray</b>';
+        // echo "<br>";
+        // echo "<pre>";
+        // var_dump($uriArray);
+        // echo "</pre>";
+        // echo '<b>$methodDictionary</b>';
+        // echo "<br>";
+        // echo "<pre>";
+        // var_dump($methodDictionary);
+        // echo "</pre>";
+        // echo '<b>$formatedRoute</b>';
+        // echo "<br>";
+        // var_dump($formatedRoute);
+
         $method = $methodDictionary[$formatedRoute];
-        echo "<br>";
-        echo "</pre>";
-        echo '<b>$method</b>';
-        echo "<br>";
-        echo "<pre>";
-        echo var_dump($methodDictionary);
-        echo "</pre>";
+        // echo "<br>";
+        // echo "</pre>";
+        // echo '<b>$method</b>';
+        // echo "<br>";
+        // echo "<pre>";
+        // echo var_dump($methodDictionary);
+        // echo "</pre>";
         if (is_null($method)) {
             $this->defaultRequestHandler();
             return;
