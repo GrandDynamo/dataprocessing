@@ -44,27 +44,29 @@ spl_autoload_register(function ($class) {
 
 $router  = new Router(new Request);
 $router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}', function () {
-    return "option 1";
+    return "Routed into option: <b>1</b>";
 });
 $router->get('/dataprocessing/api/v1/animes/{id}', function () {
-    return "option2";
+    return "Routed into option: <b>2</b>";
 });
-$router->get('/dataprocessing/api/test/{ok}', function ($id) {
-    return "option3";
+$router->get('/dataprocessing/api/test', function () {
+    return "Routed into option: <b>3</b>";
 });
-$router->get('/dataprocessing/api/test', function ($ok) {
-    return "option4";
+$router->get('/dataprocessing/api/test/{ok}', function () {
+    return "Routed into option: <b>4</b>";
 });
-$router->get('/dataprocessing/api/wow/{id}', function ($id) {
-    return "option 5";
+$router->get('/dataprocessing/api/wow/{id}', function () {
+    return "Routed into option: <b>5</b>";
 });
-$router->get('/dataprocessing/api/nani/', function ($nani) {
-    return "option6";
+$router->get('/dataprocessing/api/nani/', function () {
+    return "Routed into option: <b>6</b>";
 });
-$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow2', function () {
-    return "option 7";
+$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow', function () {
+    return "Routed into option: <b>7</b>";
 });
-
+$router->get('/dataprocessing/api/test/{nice}', function () {
+    return "Routed into option: <b>8</b>";
+});
 $apiFactory = new APIFactory();
 
 
