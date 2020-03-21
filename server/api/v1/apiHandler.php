@@ -16,8 +16,13 @@ $apiFactory = new APIFactory();
 $router->get('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactory) {
     return $apiFactory->getJSONFromQuery("getAnime", $id);
 });
+$router->post('/dataprocessing/api/v1/anime/', function ($request) use ($apiFactory) {
+    // return $apiFactory->getJSONFromQuery("getAnime", $id);
+    var_dump($request->getBody());
+    return;
+});
 $router->get('/dataprocessing/api/v1/topanime/{limit}', function ($limit) use ($apiFactory) {
-    return $apiFactory->getJSONFromQuery("getTopWatchedAnime", $limit);
+    return $apiFactory->getXMLFromQuery("getTopWatchedAnime", $limit);
 });
 $router->get('/dataprocessing/api/test/{ok}', function () use ($apiFactory) {
     return "Routed into option: <b>4</b>";

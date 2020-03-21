@@ -15,6 +15,9 @@ class Router
     function __construct(Request $request)
     {
         $this->request = $request;
+        // echo "<pre>";
+        // var_dump($this->request);
+        // echo "</pre>";
     }
 
     function __call($operationType, $args)
@@ -120,7 +123,13 @@ class Router
         if (isset($methodDictionary[$formattedRoute])) {
             $method = $methodDictionary[$formattedRoute];
             //Calls the function that is inside the route and returns the variables.
-            call_user_func_array($method, $variableArray);
+            //    call_user_func_array($method, $variableArray);
+            if ($this->request->requestMethod === "POST") {
+                call_user_func_array($method, array($this->request));
+            }
+            elseif($this->request->requestMethod === "GET"){
+                call_user_func_array($method, $variableArray);
+            }
         } elseif (!isset($methodDictionary[$formattedRoute])) {
             $this->badRequestHandler();
             return;

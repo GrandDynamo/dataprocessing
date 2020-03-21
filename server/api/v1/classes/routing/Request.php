@@ -21,6 +21,9 @@ class Request
       $this->{$this->toCamelCase($key)} = $value;
     }
     // echo "<pre>";
+    // var_dump($this->requestMethod);
+    // echo "</pre>";
+    // echo "<pre>";
     // var_dump($this);
     // echo "</pre>";
   }
@@ -42,18 +45,14 @@ class Request
   public function getBody()
   {
     if ($this->requestMethod === "GET") {
-      echo "yeeet";
       return;
     }
 
-
-    if ($this->requestMethod == "POST") {
-
+    if ($this->requestMethod === "POST") {
       $body = array();
       foreach ($_POST as $key => $value) {
         $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
       }
-
       return $body;
     }
   }
