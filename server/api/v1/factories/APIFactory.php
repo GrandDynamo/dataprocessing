@@ -80,12 +80,11 @@ class APIFactory
         // var_dump($mySQL->getResult());
         // echo "</pre>";
         $array = $mySQL->getResult();
-        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName']);   
+        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName']);
         $parse->parseArray($array);
         //Sending header information.
         header('Content-Type: application/xml; charset=utf-8');
         echo $parse->getParsedContent();
-       
     }
 
     /**
@@ -97,6 +96,7 @@ class APIFactory
      */
     public function getJSONFromQuery(string $queryName, ...$queryParams)
     {
+        
         $mySQL = new MySQL($this->connection);
         $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
         // echo "<pre>";
@@ -108,6 +108,5 @@ class APIFactory
         header('Link: <http://example.com/my-book.json>; rel="describedby"');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
-        
     }
 }

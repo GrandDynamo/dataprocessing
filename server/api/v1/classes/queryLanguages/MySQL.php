@@ -58,10 +58,10 @@ class MySQL
                 case 'double':
                     array_push($typesArray, 'd');
                     break;
-                case 'integer':
+                case 'string':
                     array_push($typesArray, 's');
                     break;
-                case 'integer':
+                case 'boolean':
                     array_push($typesArray, 'b');
                     break;
                 default:

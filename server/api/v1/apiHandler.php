@@ -3,71 +3,41 @@
 use factories\APIFactory;
 use classes\routing\{Request, Router};
 
-$categories = array('topAnime', 'userData', "toptenWatchedAnime");
-// $uriArray = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-// $uriArray = parse_url($_SERVER['QUERY_STRING']);
-
-$uriArray = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-// $uriArray = explode('/', trim($_SERVER['QUERY_STRING'], '/'));
-// if (!in_array($uriArray[3], $categories)) {
-//     header('HTTP/1.1 400 Bad request - Something in wrong with the URL.', true, 400);
-//     die('The category ' . $uri[3] . ' does not exist.');
-// }
-// use connections\Database;
-
 spl_autoload_register(function ($class) {
     require str_replace("\\", '/', "" . $class) . '.php';
 });
-
-// // $limit = $_GET['limit'];
-
-// if (isset($_GET['limit'])) {
-//     getTopWatchedAnimeList($_GET['limit']);
-// }
-
-// function getTopWatchedAnimeList(int $limit){
-//     $database = new Database();
-//     $database->getLimitedTopWatchedAnime($limit);
-// }
+$router  = new Router(new Request());
 
 
-// var_dump($database);
-// print_r($database);
-// echo $database->asXML();
+// $router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}', function () {
+//     return "Routed into option: <b>1</b>";
+// });
 
 
-// echo "<pre>";
-// var_dump($uriArray);
-// echo "</pre>";
-
-// echo json_encode($uriArray);
-
-$router  = new Router(new Request);
-$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}', function () {
-    return "Routed into option: <b>1</b>";
+//Used to inject the object into the callback function.
+$apiFactory = new APIFactory();
+$router->get('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactory) {
+    return $apiFactory->getJSONFromQuery("getAnime", $id);
 });
-$router->get('/dataprocessing/api/v1/animes/{id}', function () {
-    return "Routed into option: <b>2</b>";
+$router->get('/dataprocessing/api/v1/topanime/{limit}', function ($limit) use ($apiFactory) {
+    return $apiFactory->getJSONFromQuery("getTopWatchedAnime", $limit);
 });
-$router->get('/dataprocessing/api/test', function () {
-    return "Routed into option: <b>3</b>";
-});
-$router->get('/dataprocessing/api/test/{ok}', function () {
+$router->get('/dataprocessing/api/test/{ok}', function () use ($apiFactory) {
     return "Routed into option: <b>4</b>";
 });
-$router->get('/dataprocessing/api/wow/{id}', function () {
+$router->get('/dataprocessing/api/wow/{id}', function () use ($apiFactory) {
     return "Routed into option: <b>5</b>";
 });
-$router->get('/dataprocessing/api/nani/', function () {
+$router->get('/dataprocessing/api/nani/', function () use ($apiFactory) {
     return "Routed into option: <b>6</b>";
 });
-$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow', function () {
+$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow', function () use ($apiFactory) {
     return "Routed into option: <b>7</b>";
 });
-$router->get('/dataprocessing/api/test/{nice}', function () {
+$router->get('/dataprocessing/api/test/{nice}', function () use ($apiFactory) {
     return "Routed into option: <b>8</b>";
 });
-$apiFactory = new APIFactory();
+
 
 
 

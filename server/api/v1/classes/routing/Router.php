@@ -2,6 +2,8 @@
 
 namespace classes\routing;
 
+use ReflectionFunction;
+
 class Router
 {
     private $request;
@@ -15,32 +17,27 @@ class Router
         $this->request = $request;
     }
 
-    function __call($name, $args)
+    function __call($operationType, $args)
     {
-        //BAKA!! <///////////> code.
-        // list($route, $method) = $args;
-
-
-
-        //GUCCI code
-        $route = $args[0];
+        $routeURL = $args[0];
         $method = $args[1];
-        if (!in_array(strtoupper($name), $this->supportedHttpMethods)) {
-            echo "yeeeeeeee";
+
+        if (!in_array(strtoupper($operationType), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();
         }
 
-        $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
+        $this->{strtolower($operationType)}[$this->formatRoute($routeURL)] = $method;
     }
 
     /**
      * Removes trailing forward slashes from the right of the route.
-     * 
+     *
      * @param route (string)
+     * @return void
      */
-    private function formatRoute($route)
+    private function formatRoute($routeURL)
     {
-        $result = rtrim($route, '/');
+        $result = rtrim($routeURL, '/');
         if ($result === '') {
             return '/';
         }
@@ -63,9 +60,13 @@ class Router
     }
 
     /**
-     * Resolves a route
+     * Resolves a route including routes with variables.
+     * 
+     * @todo Break apart into smaller code using methods.
+     *
+     * @return void
      */
-    function resolve()
+    function resolveRoute()
     {
         //Get all defined routes.
         $methodDictionary = $this->{strtolower($this->request->requestMethod)};
@@ -73,8 +74,11 @@ class Router
         $formattedRoute = $this->formatRoute($this->request->requestUri);
         //Explode URL send by a user into an Array.
         $receivedURLArray = explode('/', trim($formattedRoute, '/'));
+
+        $variableArray = array();
         //Loop through de dictionary containing routes.
         foreach ($methodDictionary as $method => $value) {
+
             //Explode Routing URL into an Array.
             $routingURLArray = explode('/', trim($method, '/'));
 
@@ -87,6 +91,8 @@ class Router
                         //Break out of this iteration and lets loop go to next iteration.
                         continue;
                     } elseif (preg_match('/{(.*?)}/', $value)) {
+                        //Stores user variable in array.
+                        $variableArray[] = $receivedURLArray[$key];
                         //Replace variable inside the routing uri to a value recieved by the user.
                         $routingURLArray[$key] = $receivedURLArray[$key];
                     }
@@ -113,8 +119,8 @@ class Router
         //Checks if the URL send by a user was correct. If not, return corresponding error.
         if (isset($methodDictionary[$formattedRoute])) {
             $method = $methodDictionary[$formattedRoute];
-            //Calls the function that is inside the route.
-            echo call_user_func_array($method, array($this->request));
+            //Calls the function that is inside the route and returns the variables.
+            call_user_func_array($method, $variableArray);
         } elseif (!isset($methodDictionary[$formattedRoute])) {
             $this->badRequestHandler();
             return;
@@ -126,6 +132,6 @@ class Router
 
     function __destruct()
     {
-        $this->resolve();
+        $this->resolveRoute();
     }
 }

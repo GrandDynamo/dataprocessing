@@ -42,6 +42,7 @@ class Request
   public function getBody()
   {
     if ($this->requestMethod === "GET") {
+      echo "yeeet";
       return;
     }
 
