@@ -56,7 +56,7 @@
             }
         },
         "getAnimeRatings": {
-            "query": "SELECT * FROM `ratinglist` WHERE `anime_id` = ? AND `rating` > 1",
+            "query": "SELECT * FROM `ratinglist` WHERE `anime_id` = ? AND `rating` > ?",
             "XMLSettings": {
                 "groupedNodeName": "anime",
                 "rootNodeName": "root"
@@ -70,7 +70,7 @@
             }
         },
         "addAnime": {
-            "query": "INSERT INTO `animelist`(`name`, `genre`, `type`, `episodes`, `rating`, `members`) VALUES ('testAnimeInsert','Romance, Isekai','TV',12,10,4269)"
+            "query": "INSERT INTO `animelist`(`name`, `genre`, `type`, `episodes`, `rating`, `members`) VALUES (?,?,?,?,?,?)"
         }
     }
 }

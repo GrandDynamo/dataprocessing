@@ -96,7 +96,7 @@ class APIFactory
      */
     public function getJSONFromQuery(string $queryName, ...$queryParams)
     {
-        
+
         $mySQL = new MySQL($this->connection);
         $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
         // echo "<pre>";
@@ -108,5 +108,40 @@ class APIFactory
         header('Link: <http://example.com/my-book.json>; rel="describedby"');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
+    }
+
+    /**
+     * Can be used to execute Idempotent queries that are not safe. 
+     * For example: PUT and DELETE.
+     *
+     * @param string $queryName
+     * @param mixed ...$queryParams
+     * @return void
+     */
+    public function executeNonSafeIdempotentQuery(string $queryName, ...$queryParams)
+    {
+        foreach ($queryParams as $key => $value) {
+            $queryArray[] = $value;
+        }
+        $mySQL = new MySQL($this->connection);
+        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+    }
+
+    /**
+     * Can be used to execute Non-Idempotent queries that are not safe.
+     * For example: POST.
+     *
+     * @param string $queryName
+     * @param mixed ...$queryParams
+     * @return void
+     */
+    public function executeNonSafeNonIdempotentQuery(string $queryName, $queryParams)
+    {
+        foreach ($queryParams as $key => $value) {
+            $queryArray[] = $value;
+        }
+
+        $mySQL = new MySQL($this->connection);
+        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
     }
 }

@@ -17,12 +17,11 @@ $router->get('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactor
     return $apiFactory->getJSONFromQuery("getAnime", $id);
 });
 $router->post('/dataprocessing/api/v1/anime/', function ($request) use ($apiFactory) {
-    // return $apiFactory->getJSONFromQuery("getAnime", $id);
-    var_dump($request->getBody());
+    $apiFactory->executeNonSafeNonIdempotentQuery("addAnime", $request->getBody());
     return;
 });
-$router->get('/dataprocessing/api/v1/topanime/{limit}', function ($limit) use ($apiFactory) {
-    return $apiFactory->getXMLFromQuery("getTopWatchedAnime", $limit);
+$router->get('/dataprocessing/api/v1/animeratings/{animeid}/{higherthen}', function ($animeRatings, $higherThen) use ($apiFactory) {
+    return $apiFactory->getJSONFromQuery("getAnimeRatings", $animeRatings, $higherThen);
 });
 $router->get('/dataprocessing/api/test/{ok}', function () use ($apiFactory) {
     return "Routed into option: <b>4</b>";

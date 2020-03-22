@@ -9,7 +9,9 @@ class Router
     private $request;
     private $supportedHttpMethods = array(
         "GET",
-        "POST"
+        "POST",
+        "POST",
+        "PUT"
     );
 
     function __construct(Request $request)
@@ -124,7 +126,7 @@ class Router
             $method = $methodDictionary[$formattedRoute];
             //Calls the function that is inside the route and returns the variables.
             //    call_user_func_array($method, $variableArray);
-            if ($this->request->requestMethod === "POST") {
+            if ($this->request->requestMethod === "POST" || $this->request->requestMethod === "PUT" || $this->request->requestMethod === "DELETE") {
                 call_user_func_array($method, array($this->request));
             }
             elseif($this->request->requestMethod === "GET"){

@@ -11,7 +11,6 @@ class MySQL
 {
     private mysqli $connection;
     private array $result = array();
-    private $test;
 
     /**
      * Uses the mysqli connection to execute queries.
@@ -24,7 +23,9 @@ class MySQL
     }
 
     /**
-     * Executes a SQL query.
+     * Executes a Mysql query with Mysqli.
+     * 
+     * @todo Cleaner error handling.
      *
      * @param string $query Mysql query in string form.
      * @param mixed ...$queryParams [Optional] The parameters of a query.
@@ -32,13 +33,33 @@ class MySQL
      */
     public function executeQuery(string $query, ...$queryParams): void
     {
-        $stmt = $this->connection->prepare($query);
-        if ($queryParams) {
-            $typesString = $this->createBindingTypeString(...$queryParams);
-            $stmt->bind_param($typesString, ...$queryParams);
+
+        if (!$stmt = $this->connection->prepare($query)) {
+            die("Error prepare");
         }
-        $stmt->execute();
-        $this->result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if ($queryParams) {
+            if (!$typesString = $this->createBindingTypeString(...$queryParams)) {
+                header("HTTP/1.0 400 Bad Request");
+                die();
+            }
+            //Checks if number of parameters needed to bind are the same.
+            if (!($stmt->param_count === strlen($typesString))) {
+                header("HTTP/1.0 400 Bad Request");
+                die();
+            }
+            if (!$stmt->bind_param($typesString, ...$queryParams)) {
+                header("HTTP/1.0 400 Bad Request");
+                die();
+            }
+        }
+        if (!$stmt->execute()) {
+            header("HTTP/1.0 500 Internal Server Error");
+        }
+
+        //Checks if querie executed query returns a result set.
+        if ($result = $stmt->get_result()) {
+            $this->result = $result->fetch_all(MYSQLI_ASSOC);
+        }
     }
 
     /**
@@ -65,11 +86,11 @@ class MySQL
                     array_push($typesArray, 'b');
                     break;
                 default:
-                    exit("Invalid parameter type for query");
+                    header("HTTP/1.0 400 Bad Request");
+                    die("Invalid parameter type for query");
                     break;
             }
         }
-
         return $typesArray = implode($typesArray);
     }
 
