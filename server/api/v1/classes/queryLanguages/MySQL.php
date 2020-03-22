@@ -57,7 +57,10 @@ class MySQL
             header("HTTP/1.0 500 Internal Server Error");
             return false;
         }
-
+        //Only returns false. Its up to the caller to send correct header.
+        if (($stmt->affected_rows) === 0) {
+            return false;
+        }
         //Checks if querie executed query returns a result set.
         if ($result = $stmt->get_result()) {
             if (!$result->num_rows > 0) {
@@ -65,7 +68,10 @@ class MySQL
                 return false;
             }
             $this->result = $result->fetch_all(MYSQLI_ASSOC);
+            header("HTTP/1.0 200 OK");
+            return true;
         }
+        header("HTTP/1.0 204 No Content");
         return true;
     }
 

@@ -127,13 +127,21 @@ class APIFactory
         }
 
         //Check if ...$queryParams contains an array to use correct $id nesting depth.
+
         if (count($queryParams) === 0) {
             $queryArray[] = $id;
         } elseif (count($queryParams) === 1) {
             $queryArray[] = $id[0];
         }
         $mySQL = new MySQL($this->connection);
-        if ($mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray)) {
+        $returnedBool = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+        //Return appropiate header for PUT or DELETE.
+        if ($returnedBool === false) {
+            if (count($queryParams) === 0) {
+                header("HTTP/1.0 404 Not Found");
+            } elseif (count($queryParams) === 1) {
+                header("HTTP/1.0 204 No Content");
+            }
         }
     }
 
@@ -152,6 +160,9 @@ class APIFactory
         }
 
         $mySQL = new MySQL($this->connection);
-        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+        $returnedBool = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+        if ($returnedBool === true){
+            // header("HTTP/1.0 204 No Content");
+        }
     }
 }
