@@ -17,14 +17,16 @@ $router->get('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactor
     return $apiFactory->getJSONFromQuery("getAnime", $id);
 });
 $router->post('/dataprocessing/api/v1/anime/', function ($request) use ($apiFactory) {
-    $apiFactory->executeNonSafeNonIdempotentQuery("addAnime", $request->getBody());
-    return;
+    return $apiFactory->executeNonSafeNonIdempotentQuery("addAnime", $request->getBody());
 });
 $router->get('/dataprocessing/api/v1/animeratings/{animeid}/{higherthen}', function ($animeRatings, $higherThen) use ($apiFactory) {
     return $apiFactory->getJSONFromQuery("getAnimeRatings", $animeRatings, $higherThen);
 });
-$router->get('/dataprocessing/api/test/{ok}', function () use ($apiFactory) {
-    return "Routed into option: <b>4</b>";
+$router->put('/dataprocessing/api/v1/anime/{id}', function ($request, $id) use ($apiFactory) {
+    return $apiFactory->executeNonSafeIdempotentQuery("updateAnime", $id, $request->getBody());
+});
+$router->delete('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactory) {
+    return $apiFactory->executeNonSafeIdempotentQuery("deleteAnime", $id);
 });
 $router->get('/dataprocessing/api/wow/{id}', function () use ($apiFactory) {
     return "Routed into option: <b>5</b>";

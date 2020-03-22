@@ -56,5 +56,23 @@ class Request
       }
       return $body;
     }
+    if ($this->requestMethod === "PUT") {
+      parse_str(file_get_contents('php://input'), $_PUT);
+      $body = array();
+      foreach ($_PUT as $key => $value) {
+        // $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        $body[$key] = $value;
+      }
+      return $body;
+    }
+    if ($this->requestMethod === "DELETE") {
+      parse_str(file_get_contents('php://input'), $_PUT);
+      $body = array();
+      foreach ($_PUT as $key => $value) {
+        // $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        $body[$key] = $value;
+      }
+      return $body;
+    }
   }
 }

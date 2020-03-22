@@ -118,13 +118,23 @@ class APIFactory
      * @param mixed ...$queryParams
      * @return void
      */
-    public function executeNonSafeIdempotentQuery(string $queryName, ...$queryParams)
+    public function executeNonSafeIdempotentQuery(string $queryName, $id, ...$queryParams)
     {
         foreach ($queryParams as $key => $value) {
-            $queryArray[] = $value;
+            foreach ($value as $key => $nestedValue) {
+                $queryArray[] = $nestedValue;
+            }
+        }
+
+        //Check if ...$queryParams contains an array to use correct $id nesting depth.
+        if (count($queryParams) === 0) {
+            $queryArray[] = $id;
+        } elseif (count($queryParams) === 1) {
+            $queryArray[] = $id[0];
         }
         $mySQL = new MySQL($this->connection);
-        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+        if ($mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray)) {
+        }
     }
 
     /**

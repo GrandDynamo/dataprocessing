@@ -71,6 +71,12 @@
         },
         "addAnime": {
             "query": "INSERT INTO `animelist`(`name`, `genre`, `type`, `episodes`, `rating`, `members`) VALUES (?,?,?,?,?,?)"
+        },
+        "updateAnime": {
+            "query": "UPDATE `animelist` SET `name`=?,`genre`=?,`type`=?,`episodes`=?,`rating`=?,`members`=? WHERE `anime_id`= ?"
+        },
+        "deleteAnime": {
+            "query": "DELETE FROM `animelist` WHERE `anime_id` = ?;"
         }
     }
 }

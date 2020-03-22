@@ -10,7 +10,7 @@ class Router
     private $supportedHttpMethods = array(
         "GET",
         "POST",
-        "POST",
+        "DELETE",
         "PUT"
     );
 
@@ -30,7 +30,6 @@ class Router
         if (!in_array(strtoupper($operationType), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();
         }
-
         $this->{strtolower($operationType)}[$this->formatRoute($routeURL)] = $method;
     }
 
@@ -124,12 +123,14 @@ class Router
         //Checks if the URL send by a user was correct. If not, return corresponding error.
         if (isset($methodDictionary[$formattedRoute])) {
             $method = $methodDictionary[$formattedRoute];
-            //Calls the function that is inside the route and returns the variables.
-            //    call_user_func_array($method, $variableArray);
-            if ($this->request->requestMethod === "POST" || $this->request->requestMethod === "PUT" || $this->request->requestMethod === "DELETE") {
+
+            //Calls the callback function that is inside the route and returns the variables.
+            if ($this->request->requestMethod === "POST") {
                 call_user_func_array($method, array($this->request));
             }
-            elseif($this->request->requestMethod === "GET"){
+            if ($this->request->requestMethod === "PUT") {
+                call_user_func_array($method, array($this->request, $variableArray));
+            } elseif ($this->request->requestMethod === "GET" || $this->request->requestMethod === "DELETE") {
                 call_user_func_array($method, $variableArray);
             }
         } elseif (!isset($methodDictionary[$formattedRoute])) {
