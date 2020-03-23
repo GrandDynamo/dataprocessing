@@ -32,7 +32,7 @@ class APIFactory
     private function loadDatabaseSettings(): void
     {
         $readSettings = new ReadSettings();
-        $readSettings->readFile('settings.json');
+        $readSettings->readFile('settings.php');
 
         $this->dbSettings = ($readSettings->getSettingsArray())['dbConnectionSettings'];
     }
@@ -44,7 +44,7 @@ class APIFactory
     private function loadQuerySettings(): void
     {
         $readSettings = new ReadSettings();
-        $readSettings->readFile('settings.json');
+        $readSettings->readFile('settings.php');
         $xmlsettings = $readSettings->getSettingsArray();
         $this->querySetting = $xmlsettings['querySettings'];
     }
@@ -65,6 +65,28 @@ class APIFactory
     }
 
     /**
+     * Can be used to execute Idempotent queries that are safe.
+     * For example: GET.
+     * And calls the appropiate method for returning content.
+     *
+     * @param string $queryName
+     * @param mixed ...$queryParams
+     * @return void
+     */
+    public function executeSafeIdempotentQuery(string $queryName, ...$queryParams)
+    {
+        $requestedContentType = $_SERVER['HTTP_CONTENT_TYPE'];
+        if ($requestedContentType == "application/json") {
+            $this->getJSONFromQuery($queryName, ...$queryParams);
+            return;
+        } else {
+            $this->getXMLFromQuery($queryName, ...$queryParams);
+            return;
+        }
+        return;
+    }
+
+    /**
      * Retrieves a XML structured string from a query.
      *
      * @param string $query
@@ -72,7 +94,7 @@ class APIFactory
      * @return void
      */
     // public function getXMLFromQuery(string $query, array $XMLNodes, ...$queryParams)
-    public function getXMLFromQuery(string $queryName, ...$queryParams)
+    private function getXMLFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
         $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
@@ -94,7 +116,7 @@ class APIFactory
      * @param mixed ...$queryParams
      * @return void
      */
-    public function getJSONFromQuery(string $queryName, ...$queryParams)
+    private function getJSONFromQuery(string $queryName, ...$queryParams)
     {
 
         $mySQL = new MySQL($this->connection);
@@ -140,7 +162,7 @@ class APIFactory
             if (count($queryParams) === 0) {
                 header("HTTP/1.0 404 Not Found");
             } elseif (count($queryParams) === 1) {
-                header("HTTP/1.0 204 No Content");
+                // header("HTTP/1.0 204 No Content");
             }
         }
     }
@@ -161,7 +183,7 @@ class APIFactory
 
         $mySQL = new MySQL($this->connection);
         $returnedBool = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
-        if ($returnedBool === true){
+        if ($returnedBool === true) {
             // header("HTTP/1.0 204 No Content");
         }
     }

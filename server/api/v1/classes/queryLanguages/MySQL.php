@@ -23,7 +23,7 @@ class MySQL
     }
 
     /**
-     * Executes a Mysql query with Mysqli.
+     * Execute a Mysql query with Mysqli.
      * 
      * @todo Cleaner error handling.
      *

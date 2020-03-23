@@ -3,6 +3,8 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ server/api/v1/apiHandler.php/?$1 [QSA,NC,L]
+RewriteRule .* - [E=HTTP_CONTENT_TYPE:%{HTTP:Content-Type},L]
+#RewriteRule .* - [E=HTTP_CONTENT_TYPE:%{HTTP:Accept},L]
 #RewriteRule ^(.*)$ server/index.php?url=/$1 [QSA,L] 
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
