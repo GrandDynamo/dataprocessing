@@ -1,0 +1,20 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="anime">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="animeId" type="xs:integer"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="genre" type="xs:string"/>
+                            <xs:element name="type" type="xs:string"/>
+                            <xs:element name="episodes" type="xs:integer"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+           <xs:attribute name="schemaLocation" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

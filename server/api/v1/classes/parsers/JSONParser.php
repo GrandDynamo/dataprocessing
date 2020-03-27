@@ -21,6 +21,8 @@ class JSONParser extends Parser
      */
     public function parseArray(array $array): void
     {
+        // print_r($array);
+        // $array = array("wow", "eee");
         $this->JSONString = json_encode($array);
     }
 

@@ -3,6 +3,7 @@
 namespace classes\parsers;
 
 use SimpleXMLElement;
+
 /**
  * Class that parses things into a XML format.
  */
@@ -11,11 +12,13 @@ class XMLParser extends Parser
     private ?string $groupedNodeName;
     private ?string $XMLTree;
     private string $rootNodeName;
+    private ?string $schemaName;
 
-    public function __construct(string $rootNodeName, string $groupedNodeName)
+    public function __construct(string $rootNodeName, string $groupedNodeName, string $schemaName)
     {
         $this->groupedNodeName = null;
         $this->XMLTree = null;
+        $this->schemaName = $schemaName;
         $this->rootNodeName = $rootNodeName;
         $this->groupedNodeName = $groupedNodeName;
     }
@@ -38,6 +41,8 @@ class XMLParser extends Parser
         // When root isnt defined use predefined root.
         if ($_xml === null) {
             $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<' . $this->rootNodeName . '/>');
+            $_xml->addAttribute("xmlns:xmlns:xsi", "http://www.w3.org/2001/XMLSchema");
+            $_xml->addAttribute("xsi:schemaLocation", "http://localhost/dataprocessing/server/api/v1/schemas/xsd/" . $this->schemaName . ".xsd");
         }
 
         // Visit all key value pair 

@@ -3,9 +3,8 @@
 namespace factories;
 
 use classes\{fileManager\readers\ReadSettings, queryLanguages\MySQL};
-use classes\parsers\JSONParser;
+use classes\parsers\{JSONParser, XMLParser};
 use mysqli;
-use classes\parsers\XMLParser;
 
 spl_autoload_register(function ($class) {
     require str_replace("\\", '/', "" . $class) . '.php';
@@ -32,7 +31,7 @@ class APIFactory
     private function loadDatabaseSettings(): void
     {
         $readSettings = new ReadSettings();
-        $readSettings->readFile('settings.php');
+        $readSettings->readFile('settings.json');
 
         $this->dbSettings = ($readSettings->getSettingsArray())['dbConnectionSettings'];
     }
@@ -44,7 +43,7 @@ class APIFactory
     private function loadQuerySettings(): void
     {
         $readSettings = new ReadSettings();
-        $readSettings->readFile('settings.php');
+        $readSettings->readFile('settings.json');
         $xmlsettings = $readSettings->getSettingsArray();
         $this->querySetting = $xmlsettings['querySettings'];
     }
@@ -97,17 +96,17 @@ class APIFactory
     private function getXMLFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
-        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
-        // echo "<pre>";
-        // var_dump($mySQL->getResult());
-        // echo "</pre>";
+        $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
+        if(!$execution){
+            die();
+        }
         $array = $mySQL->getResult();
-        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName']);
+        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName'], "getAnime");
         $parse->parseArray($array);
         //Sending header information.
         header('Content-Type: application/xml; charset=utf-8');
         echo $parse->getParsedContent();
-    }
+       }
 
     /**
      * Retrieves a JSON structured string from a query.
@@ -120,14 +119,15 @@ class APIFactory
     {
 
         $mySQL = new MySQL($this->connection);
-        $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
-        // echo "<pre>";
-        // var_dump($mySQL->getResult());
-        // echo "</pre>";
+        $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
+        if(!$execution){
+            die();
+        }
         $parse = new JSONParser();
         $array = $mySQL->getResult();
         $parse->parseArray($array);
-        header('Link: <http://example.com/my-book.json>; rel="describedby"');
+        //Header to return schema location to the consumer.
+        header('Link: http://localhost/dataprocessing/server/api/v1/schemas/draft-07/'.$queryName.'.json');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
     }
@@ -149,16 +149,16 @@ class APIFactory
         }
 
         //Check if ...$queryParams contains an array to use correct $id nesting depth.
-
         if (count($queryParams) === 0) {
             $queryArray[] = $id;
         } elseif (count($queryParams) === 1) {
             $queryArray[] = $id[0];
         }
+
         $mySQL = new MySQL($this->connection);
-        $returnedBool = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
+        $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
         //Return appropiate header for PUT or DELETE.
-        if ($returnedBool === false) {
+        if ($execution === false) {
             if (count($queryParams) === 0) {
                 header("HTTP/1.0 404 Not Found");
             } elseif (count($queryParams) === 1) {

@@ -7,7 +7,6 @@ spl_autoload_register(function ($class) {
     require str_replace("\\", '/', "" . $class) . '.php';
 });
 
-var_dump(apache_request_headers());
 $router  = new Router(new Request());
 
 //Used to inject the object into the callback function.
@@ -30,10 +29,10 @@ $router->put('/dataprocessing/api/v1/anime/{id}', function ($request, $id) use (
 $router->delete('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFactory) {
     return $apiFactory->executeNonSafeIdempotentQuery("deleteAnime", $id);
 });
-$router->get('/dataprocessing/api/wow/{id}', function () use ($apiFactory) {
-    return "Routed into option: <b>5</b>";
+$router->get('/dataprocessing/api/v1/topanimes/{amount}', function ($amount) use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery("getTopWatchedAnime", $amount);
 });
-$router->get('/dataprocessing/api/nani/', function () use ($apiFactory) {
+$router->get('/dataprocessing/api/v1/numve', function () use ($apiFactory) {
     return "Routed into option: <b>6</b>";
 });
 $router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow', function () use ($apiFactory) {
