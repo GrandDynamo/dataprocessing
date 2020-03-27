@@ -1,2 +1,2 @@
-# dataprocessing
+# MicroAPI
 Schoolopdracht voor Dataprocessing.
