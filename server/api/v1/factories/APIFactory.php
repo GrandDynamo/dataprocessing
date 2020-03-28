@@ -97,7 +97,7 @@ class APIFactory
     {
         $mySQL = new MySQL($this->connection);
         $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
-        if(!$execution){
+        if (!$execution) {
             die();
         }
         $array = $mySQL->getResult();
@@ -106,7 +106,7 @@ class APIFactory
         //Sending header information.
         header('Content-Type: application/xml; charset=utf-8');
         echo $parse->getParsedContent();
-       }
+    }
 
     /**
      * Retrieves a JSON structured string from a query.
@@ -120,14 +120,14 @@ class APIFactory
 
         $mySQL = new MySQL($this->connection);
         $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryParams);
-        if(!$execution){
+        if (!$execution) {
             die();
         }
         $parse = new JSONParser();
         $array = $mySQL->getResult();
         $parse->parseArray($array);
         //Header to return schema location to the consumer.
-        header('Link: http://localhost/dataprocessing/server/api/v1/schemas/draft-07/'.$queryName.'.json');
+        header('Link: http://localhost/dataprocessing/server/api/v1/schemas/draft-07/' . $queryName . '.json');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
     }
@@ -142,6 +142,7 @@ class APIFactory
      */
     public function executeNonSafeIdempotentQuery(string $queryName, $id, ...$queryParams)
     {
+
         foreach ($queryParams as $key => $value) {
             foreach ($value as $key => $nestedValue) {
                 $queryArray[] = $nestedValue;
@@ -154,7 +155,6 @@ class APIFactory
         } elseif (count($queryParams) === 1) {
             $queryArray[] = $id[0];
         }
-
         $mySQL = new MySQL($this->connection);
         $execution = $mySQL->executeQuery($this->querySetting[$queryName]['query'], ...$queryArray);
         //Return appropiate header for PUT or DELETE.

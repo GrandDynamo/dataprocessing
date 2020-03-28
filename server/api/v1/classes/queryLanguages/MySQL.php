@@ -25,7 +25,6 @@ class MySQL
     /**
      * Execute a Mysql query with Mysqli.
      * 
-     * @todo Cleaner error handling.
      *
      * @param string $query Mysql query in string form.
      * @param mixed ...$queryParams [Optional] The parameters of a query.
@@ -38,7 +37,22 @@ class MySQL
             die("Error prepare");
         }
         if ($queryParams) {
-            // if (!$typesString = $this->createBindingTypeString(...$queryParams)) {
+
+            //If $queryParams is multidimensional, make it flat.
+            if (array_key_exists(1, $queryParams)) {
+                if (is_array($queryParams[1])) {
+                    $queryParams2 = [];
+                    $queryParams2[] = $queryParams[0];
+                    for ($i = 0; $i < count($queryParams[1]); $i++) {
+                        $queryParams2[] = $queryParams[1][$i];
+                    }
+                    $queryParams = $queryParams2;
+                } else {
+                    header("HTTP/1.0 500 Internal Server Error");
+                    return false;
+                }
+            }
+
             if (!$typesString = $this->createBindingTypeString(...$queryParams)) {
                 header("HTTP/1.0 400 Bad Request");
                 return false;
@@ -57,7 +71,7 @@ class MySQL
             header("HTTP/1.0 500 Internal Server Error");
             return false;
         }
-        //Only returns false. Its up to the caller to send correct header.
+        //If no row is changed return false. Its up to the caller to send correct header.
         if (($stmt->affected_rows) === 0) {
             return false;
         }
@@ -67,7 +81,24 @@ class MySQL
                 header("HTTP/1.0 404 Not Found");
                 return false;
             }
+
             $this->result = $result->fetch_all(MYSQLI_ASSOC);
+
+            /**
+             * Uitzoeken welke beter past bij mijn usecase, de array_filter manier die checked of alles null of 0 is 
+             * of de in_array manier waarbij er maar 1 value null hoeft te zijn.
+             */
+            //Check if there is a NULL value returned by MySQL.
+            // if(in_array(null, $this->result[0], true)){
+            //     header("HTTP/1.0 400 Bad Request");
+            //     return false;
+            // }
+
+            if (!array_filter($this->result[0])) {
+                header("HTTP/1.0 400 Bad Request");
+                return false;
+            }
+
             header("HTTP/1.0 200 OK");
             return true;
         }

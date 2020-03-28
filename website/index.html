@@ -175,6 +175,7 @@
          * 
          * This section retrieves all json data from the API.
          * 
+         * @todo: IMPLEMENT XML OR JSON CHECK TO SEE WHAT TO REQUEST.
          *  
         */
         //Retrieve Top anime data
@@ -186,7 +187,10 @@
                 contentType: "application/xml",
                 success: function (data, status, xhr) {
                     var retrievedData = xmlToJson.parse(data);
-                    console.log(JSON.stringify(retrievedData['root'].anime));
+                    //Retrieves the correct data from the newly created JSON object.
+                    retrievedData = Object.entries(Object.entries(retrievedData)[0][1])[2][1];
+                    // console.log(JSON.stringify(retrievedData['root'].anime));
+                    // console.log(JSON.stringify(retrievedData['root'].anime));
                     // var schemaLocation = xhr.getResponseHeader('Link');
                     var schemaLocation = "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getTopWatchedAnime.json";
                     var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];

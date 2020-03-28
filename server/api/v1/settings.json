@@ -13,15 +13,22 @@
                 "rootNodeName": "root"
             }
         },
-        "getTotalNumberOfMaleFemaleUsers": {
-            "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
+        "getNumberOfMaleFemaleUsers": {
+            "query": "SELECT (SELECT COUNT(ratinglist.user_id) FROM ratinglist WHERE ratinglist.anime_id = ?) AS TotalViewers, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' AND ratinglist.anime_id = ?) AS Male, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' AND ratinglist.anime_id = ?) AS Female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id WHERE ratinglist.anime_id = ? GROUP BY Male",
             "XMLSettings": {
                 "groupedNodeName": "gendersUsers",
                 "rootNodeName": "root"
             }
         },
-        "getNumberOfMaleFemaleUsers": {
+        "getTotalNumberOfFemaleViewers": {
             "query": "SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE gender = 'Male' AND ratinglist.anime_id = 1",
+            "XMLSettings": {
+                "groupedNodeName": "gendersUsers",
+                "rootNodeName": "root"
+            }
+        },
+        "getTotalNumberOfMaleFemaleUsers": {
+            "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
             "XMLSettings": {
                 "groupedNodeName": "gendersUsers",
                 "rootNodeName": "root"
@@ -56,7 +63,7 @@
             }
         },
         "getAnime": {
-            "query": "SELECT animelist.anime_id AS id, animelist.name, animelist.genre AS genre, animelist.type AS type, COUNT(ratinglist.user_id) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id WHERE animelist.anime_id = ?",
+            "query": "SELECT animelist.anime_id AS id, animelist.name, animelist.genre AS genre, animelist.type AS TYPE, NULLIF(COUNT(ratinglist.user_id), 0) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id WHERE animelist.anime_id = ?",
             "XMLSettings": {
                 "groupedNodeName": "anime",
                 "rootNodeName": "root"
