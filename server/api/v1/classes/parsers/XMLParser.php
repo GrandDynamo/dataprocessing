@@ -14,7 +14,7 @@ class XMLParser extends Parser
     private string $rootNodeName;
     private ?string $schemaName;
 
-    public function __construct(string $rootNodeName, string $groupedNodeName, string $schemaName)
+    public function __construct(string $rootNodeName, string $groupedNodeName, ?string $schemaName)
     {
         $this->groupedNodeName = null;
         $this->XMLTree = null;
@@ -22,6 +22,7 @@ class XMLParser extends Parser
         $this->rootNodeName = $rootNodeName;
         $this->groupedNodeName = $groupedNodeName;
     }
+
 
     /**
      * Parse an array into XML.
@@ -38,16 +39,20 @@ class XMLParser extends Parser
     {
         $_xml = $xml;
 
-        // When root isnt defined use predefined root.
+
         if ($_xml === null) {
+            // When root isnt defined use predefined root name (used in recursion).
             $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<' . $this->rootNodeName . '/>');
             $_xml->addAttribute("xmlns:xmlns:xsi", "http://www.w3.org/2001/XMLSchema");
-            $_xml->addAttribute("xsi:schemaLocation", "http://localhost/dataprocessing/server/api/v1/schemas/xsd/" . $this->schemaName . ".xsd");
+
+            // Check if schema name is set. 
+            if ($this->schemaName) {
+                $_xml->addAttribute("xsi:schemaLocation", "http://localhost/dataprocessing/server/api/v1/schemas/xsd/" . $this->schemaName . ".xsd");
+            }
         }
 
         // Visit all key value pair 
         foreach ($array as $k => $v) {
-
             // If there is nested array then 
             if (is_array($v)) {
                 $k = $this->groupedNodeName;

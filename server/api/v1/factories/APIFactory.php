@@ -86,13 +86,27 @@ class APIFactory
     }
 
     /**
+     * Returns the name of a validation schema if it exists in the settings.json
+     * When not present in the settings file return nothing.
+     *
+     * @param string $queryName
+     * @return null|string
+     */
+    private function getSchemaName($queryName): ?string
+    {
+        if (isset($this->querySetting[$queryName]['schemaName'])) {
+            return $this->querySetting[$queryName]['schemaName'];
+        }
+        return null;
+    }
+
+    /**
      * Retrieves a XML structured string from a query.
      *
      * @param string $query
      * @param mixed ...$queryParams
      * @return void
      */
-    // public function getXMLFromQuery(string $query, array $XMLNodes, ...$queryParams)
     private function getXMLFromQuery(string $queryName, ...$queryParams)
     {
         $mySQL = new MySQL($this->connection);
@@ -101,7 +115,7 @@ class APIFactory
             die();
         }
         $array = $mySQL->getResult();
-        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName'], "getAnime");
+        $parse = new XMLParser($this->querySetting[$queryName]['XMLSettings']['rootNodeName'], $this->querySetting[$queryName]['XMLSettings']['groupedNodeName'], $this->getSchemaName($queryName));
         $parse->parseArray($array);
         //Sending header information.
         header('Content-Type: application/xml; charset=utf-8');

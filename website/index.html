@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.12.0/ajv.min.js"
         integrity="sha256-QZBaIVRF3ZHdyLzzW3WQQ5kVlqYeAgx4ccOv4ph/e/E=" crossorigin="anonymous"></script>
     <script src="libraries/xmlToJson-master/xmlToJson.js"></script>
+    <script src="libraries/xml.js-master/xmllint.js"></script>
 
 
     <title>Anime Statistics</title>
@@ -44,138 +45,147 @@
         var mainMenuTopAnimeIds = [];
         var mainMenuTopAnimeRatings = [];
         var mainMenuTopAnimeTotalEpisodes = [];
-
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: mainMenuTopAnimeNames,
-                datasets: [
-                    // {
-                    //     type: "line",
-                    //     label: 'Rating',
-                    //     fill: false,
-                    //     backgroundColor: 'rgb(255, 99, 132)',
-                    //     borderColor: 'rgb(255, 99, 132)',
-                    //     data: mainMenuTopAnimeRatings,
-                    //     yAxisID: 'right-y-axis',
-
-                    // },
-                    // {
-                    //     type: "bar",
-                    //     label: 'Male',
-                    //     fill: false,
-                    //     backgroundColor: 'rgb(255, 99, 132)',
-                    //     borderColor: 'rgb(255, 99, 132)',
-                    //     data: mainMenuTopAnimeTotalEpisodes,
-                    //     xAxisID: 'views-x-axis',
-                    //     yAxisID: 'views-y-axis',
+        mainMenuTopAnimeChart();
+        // var myChart = {};
+        function mainMenuTopAnimeChart(dataTagsArray) {
 
 
-                    // },
+            // this.dataTagsArray.forEach(element => {
+            //     console.log(element);
+            // });
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mainMenuTopAnimeNames,
+                    datasets: [
+                        // {
+                        //     type: "line",
+                        //     label: 'Rating',
+                        //     fill: false,
+                        //     backgroundColor: 'rgb(255, 99, 132)',
+                        //     borderColor: 'rgb(255, 99, 132)',
+                        //     data: mainMenuTopAnimeRatings,
+                        //     yAxisID: 'right-y-axis',
 
-                    // {
-                    //     label: 'Episodes',
-                    //     data: mainMenuTopAnimeTotalEpisodes,
-                    //     backgroundColor: 'rgba(107, 196, 255, 1)',
-                    //     borderColor: 'rgba(0, 138, 230, 1)',
-                    // },
-                    {
-                        label: 'Rating',
-                        type: "line",
-                        data: mainMenuTopAnimeRatings,
-
-                        borderWidth: 2,
-                        // maxBarThickness: 200,
-                        // xAxisID: 'views-x-axis',
-                        yAxisID: 'right-y-axis',
-                        fill: false,
-                        pointHoverRadius: 8,
-                        pointRadius: 5,
-                        backgroundColor: 'rgb(201, 22, 60)',
-                        borderColor: 'rgb(255, 99, 132)',
+                        // },
+                        // {
+                        //     type: "bar",
+                        //     label: 'Male',
+                        //     fill: false,
+                        //     backgroundColor: 'rgb(255, 99, 132)',
+                        //     borderColor: 'rgb(255, 99, 132)',
+                        //     data: mainMenuTopAnimeTotalEpisodes,
+                        //     xAxisID: 'views-x-axis',
+                        //     yAxisID: 'views-y-axis',
 
 
-                    },
-                    {
-                        label: 'Views',
-                        data: mainMenuTopAnimeViews,
-                        backgroundColor: 'rgba(50, 180, 227)',
-                        borderColor: 'rgba(0, 138, 230, 1)',
-                    },
-                    {
-                        label: 'animeId',
-                        data: mainMenuTopAnimeIds,
-                        hidden: true,
+                        // },
 
-                    }
-                ]
-            },
-            options: {
-                legend: {
-                    labels: {
-                        filter: function (item, chart) {
-                            // Remove legend item.
-                            return !item.text.includes('animeId');
+                        // {
+                        //     label: 'Episodes',
+                        //     data: mainMenuTopAnimeTotalEpisodes,
+                        //     backgroundColor: 'rgba(107, 196, 255, 1)',
+                        //     borderColor: 'rgba(0, 138, 230, 1)',
+                        // },
+                        {
+                            label: 'Rating',
+                            type: "line",
+                            data: mainMenuTopAnimeRatings,
+
+                            borderWidth: 2,
+                            // maxBarThickness: 200,
+                            // xAxisID: 'views-x-axis',
+                            yAxisID: 'right-y-axis',
+                            fill: false,
+                            pointHoverRadius: 8,
+                            pointRadius: 5,
+                            backgroundColor: 'rgb(201, 22, 60)',
+                            borderColor: 'rgb(255, 99, 132)',
+
+
                         },
+                        {
+                            label: 'Views',
+                            data: mainMenuTopAnimeViews,
+                            backgroundColor: 'rgba(50, 180, 227)',
+                            borderColor: 'rgba(0, 138, 230, 1)',
+                        },
+                        {
+                            label: 'animeId',
+                            data: mainMenuTopAnimeIds,
+                            hidden: true,
 
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            filter: function (item, chart) {
+                                // Remove legend item.
+                                return !item.text.includes('animeId');
+                            },
+
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                            id: 'views-x-axis',
+                            ticks: {
+                                fontSize: 14,
+                            }
+                        }
+                        ],
+                        yAxes: [{
+                            stacked: true,
+                            id: 'views-y-axis',
+                            type: 'linear',
+                            position: 'left',
+                            ticks: {
+                                // suggestedMax: 10,
+                                suggestedMin: 0,
+                                stepSize: 100
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Views',
+                                fontSize: 24,
+                            },
+                        }, {
+                            type: 'linear',
+                            id: 'right-y-axis',
+                            display: true,
+                            position: 'right',
+                            stacked: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Rating',
+                                fontSize: 28,
+                            },
+                            gridLines: {
+                                drawOnChartArea: false
+                            },
+                            ticks: {
+                                suggestedMax: 10,
+                                // suggestedMin: 9,
+                                stepSize: 1
+                            }
+                        }]
                     }
                 },
-                scales: {
-                    xAxes: [{
-                        stacked: true,
-                        id: 'views-x-axis',
-                        ticks: {
-                            fontSize: 14,
-                        }
-                    }
-                    ],
-                    yAxes: [{
-                        stacked: true,
-                        id: 'views-y-axis',
-                        type: 'linear',
-                        position: 'left',
-                        ticks: {
-                            // suggestedMax: 10,
-                            suggestedMin: 0,
-                            stepSize: 100
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Views',
-                            fontSize: 24,
-                        },
-                    }, {
-                        type: 'linear',
-                        id: 'right-y-axis',
-                        display: true,
-                        position: 'right',
-                        stacked: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Rating',
-                            fontSize: 28,
-                        },
-                        gridLines: {
-                            drawOnChartArea: false
-                        },
-                        ticks: {
-                            suggestedMax: 10,
-                            // suggestedMin: 9,
-                            stepSize: 1
-                        }
-                    }]
-                }
-            },
-        })
+            })
+        }
     </script>
     <!-- Scripts for getting the data. -->
     <script>
+        var contentType = "json";
         var ajv = new Ajv({ coerceTypes: 'array' });
+
         /**
          * 
          * This section retrieves all json data from the API.
          * 
-         * @todo: IMPLEMENT XML OR JSON CHECK TO SEE WHAT TO REQUEST.
          *  
         */
         //Retrieve Top anime data
@@ -184,68 +194,96 @@
             $.ajax({
                 url: "http://localhost/dataprocessing/api/v1/topanimes/10",
                 type: 'GET',
-                contentType: "application/xml",
+                contentType: `application/${contentType}`,
                 success: function (data, status, xhr) {
-                    var retrievedData = xmlToJson.parse(data);
-                    //Retrieves the correct data from the newly created JSON object.
-                    retrievedData = Object.entries(Object.entries(retrievedData)[0][1])[2][1];
-                    // console.log(JSON.stringify(retrievedData['root'].anime));
-                    // console.log(JSON.stringify(retrievedData['root'].anime));
-                    // var schemaLocation = xhr.getResponseHeader('Link');
-                    var schemaLocation = "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getTopWatchedAnime.json";
-                    var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];
-                    // console.log(JSON.stringify(data));
+                    var schemaLocation = null;
+                    if (contentType === 'xml') {
+                        retrievedData = data;
+                        retrievedData = (new XMLSerializer()).serializeToString(retrievedData);
+                        var parsedRetrievedData = xmlToJson.parse(data);
+                        schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
 
-                    getSchemaXMLTest(retrievedData, keyNameArray, schemaLocation);
+                    }
+                    else if (contentType === 'json') {
+                        retrievedData = data;
+                        schemaLocation = xhr.getResponseHeader('Link');
+                    }
+                    //The tags that need to be retrieved.
+                    var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];
+
+                    //Main logic of calling the functions.
+                    executeChartFunctions();
+                    async function executeChartFunctions() {
+                        var schema = await getSchema(schemaLocation);
+                        await validation(retrievedData, schema);
+                        await addDataToBarGraph(retrievedData, keyNameArray);
+                        await console.log(schema);
+                    }
                 },
             })
         }
+
         //Gets the schema for the JSON or XML above.
-        function getSchemaXMLTest(retrievedData, keyNameArray, schemaLocation, ) {
-            $.ajax({
+        function getSchema(schemaLocation, ) {
+            return ($.ajax({
                 url: schemaLocation,
-                type: 'POST',
+                type: 'GET',
                 success: function (data) {
                     schema = data;
-                    validation(retrievedData, keyNameArray, schema);
                 },
-            })
+            }))
+
         }
 
+        //Validation of the retrieved data.
+        function validation(retrievedData, schema) {
+            if (contentType === 'json') {
+                console.log(ajv.validate(schema, retrievedData));
+            }
+            else if (contentType === 'xml') {
+                if (!xmllint.validateXML({ xml: retrievedData, schema: schema }).errors) {
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(retrievedData, "text/xml");
+                    retrievedData = xmlToJson.parse(xmlDoc);
+                    retrievedData = Object.entries(Object.entries(retrievedData)[0][1])[2][1];
+                    console.log("validated");
+                }
+            }
+        }
 
-        //Retrieve Top anime data
-        // getTopAnimeData();
-        // function getTopAnimeData() {
-        //     $.ajax({
-        //         url: "http://localhost/dataprocessing/api/v1/topanimes/10",
-        //         type: 'GET',
-        //         contentType: "application/json",
-        //         success: function (data, status, xhr) {
-        //             var retrievedData = data;
-        //             var schemaLocation = xhr.getResponseHeader('Link');
-        //             var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];
-        //             console.log(JSON.stringify(data));
-        //             getSchema(retrievedData, keyNameArray, schemaLocation);
-        //         },
-        //     })
-        // }
-        // //Gets the schema for the JSON or XML above.
-        // function getSchema(retrievedData, keyNameArray, schemaLocation, ) {
-        //     $.ajax({
-        //         url: schemaLocation,
-        //         type: 'POST',
-        //         success: function (data) {
-        //             schema = data;
-        //             validation(retrievedData, keyNameArray, schema);
-        //         },
-        //     })
-        // }
-
-        function addDataToBarGraph(json) {
+        function addDataToBarGraph(json, keyNameArray) {
             //The delay between two iterations in milliseconds.
             var interval = 100;
             //Gives effect of graph creation.
             var promise = Promise.resolve();
+            var dataTagsArray = [];
+            var num = 0;
+            // keyNameArray.forEach(tagName => {
+            // tagName.forEach(element => {
+            //     console.log(element);
+            // });
+            // $.each(keyNameArray, function (k, i, o) {
+            //     console.log(k);
+            //     $.each(k, function (ks, i, l) {
+            //         console.log(ks);
+            //     })
+            // })
+
+            // console.log(keyNameArray);
+            for (let keyCount = 0; keyCount < keyNameArray.length; keyCount++) {
+                // const element = array[keyCount];
+                console.log(keyCount);
+                for (let tagCount = 0; tagCount < keyNameArray.length; tagCount++) {
+                    // const element = array[tagCount];
+
+                }
+
+            }
+
+            // dataTagsArray.push(element)
+            // i++;
+            // });
+            
             $.each(json, function (k, i, o) {
                 promise = promise.then(function () {
                     // console.log(i['id']);
@@ -254,35 +292,50 @@
                     // console.log("Rating: " + i['rating']);
                     // console.log("Episodes: " + i['episodes']);
                     // console.log("ID: " + i['id']);
-                    mainMenuTopAnimeNames.push(i['name']);
-                    mainMenuTopAnimeViews.push(i['views']);
-                    mainMenuTopAnimeIds.push(i['id']);
-                    mainMenuTopAnimeRatings.push(i['rating']);
-                    mainMenuTopAnimeTotalEpisodes.push(i['episodes']);
+                   
+                    // dataTagsArray.push(i)
+                    for (let tagCount = 0; tagCount < keyNameArray.length; tagCount++) {
+                        // const element = array[tagCount];
+                        // console.log(keyNameArray[tagCount]);
+                        // dataTagsArray.push(keyNameArray[i],[keyNameArray[tagCount]]);
+                        console.log(keyNameArray[tagCount])
+                        dataTagsArray.push([num[tagCount]],[num[keyNameArray[tagCount]]]);
+                        // console.log(num, tagCount);
+                        
+                    }
+                    
+                    // dataTagsArray.push(i['name']);
+
+                    // mainMenuTopAnimeNames.push(i['name']);
+                    // mainMenuTopAnimeViews.push(i['views']);
+                    // mainMenuTopAnimeIds.push(i['id']);
+                    // mainMenuTopAnimeRatings.push(i['rating']);
+                    // mainMenuTopAnimeTotalEpisodes.push(i['episodes']);
+                    // console.log(mainMenuTopAnimeChart.myChart.update());
                     myChart.update();
+                    // mainMenuTopAnimeChart.myChart;
+                    console.log(dataTagsArray);
                     return new Promise(function (resolve) {
                         setTimeout(resolve, interval);
                     });
                 });
+
             });
+            num++;
             promise.then(function () {
                 console.log('Loop finished.');
             });
         }
 
-        //Validation
-        function validation(retrievedData, keyNameArray, schema) {
-            console.log(ajv.validate(schema, retrievedData));
-            addDataToBarGraph(retrievedData);
-        }
 
-        function validateJSON(json, schema) {
-            // console.log(JSON.stringify(json));
-            console.log(ajv.validate(schema, json));
-            addDataToBarGraph(json);
-            // console.log(data);
 
-        }
+        // function validateJSON(json, schema) {
+        //     // console.log(JSON.stringify(json));
+        //     console.log(ajv.validate(schema, json));
+        //     addDataToBarGraph(json);
+        //     // console.log(data);
+
+        // }
 
     </script>
     <!-- Click event handler for main top anime chart. -->

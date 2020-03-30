@@ -33,7 +33,7 @@ $router->get('/dataprocessing/api/v1/topanimes/{amount}', function ($amount) use
     return $apiFactory->executeSafeIdempotentQuery("getTopWatchedAnime", $amount);
 });
 $router->get('/dataprocessing/api/v1/animetotalviewersgenders/{animeid}', function ($animeId) use ($apiFactory) {
-    //Duo to how this query works and the backend is designed, i create copies of the user input and place them in an array.
+    //Due to how this query works and the backend is designed, i create copies of the user input and place them in an array.
     $animeId2 = [];
     $animeId3 = $animeId;   
     array_push($animeId2, $animeId3, $animeId3, $animeId3);
