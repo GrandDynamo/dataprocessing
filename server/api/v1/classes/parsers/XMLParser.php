@@ -39,7 +39,6 @@ class XMLParser extends Parser
     {
         $_xml = $xml;
 
-
         if ($_xml === null) {
             // When root isnt defined use predefined root name (used in recursion).
             $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<' . $this->rootNodeName . '/>');

@@ -15,25 +15,28 @@
             "schemaName": "getTopWatchedAnime"
         },
         "getNumberOfMaleFemaleUsers": {
-            "query": "SELECT (SELECT COUNT(ratinglist.user_id) FROM ratinglist WHERE ratinglist.anime_id = ?) AS TotalViewers, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' AND ratinglist.anime_id = ?) AS Male, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' AND ratinglist.anime_id = ?) AS Female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id WHERE ratinglist.anime_id = ? GROUP BY Male",
+            "query": "SELECT (SELECT COUNT(ratinglist.user_id) FROM ratinglist WHERE ratinglist.anime_id = ?) AS totalViewers, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' AND ratinglist.anime_id = ?) AS male, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' AND ratinglist.anime_id = ?) AS female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id WHERE ratinglist.anime_id = ? GROUP BY Male",
             "XMLSettings": {
-                "groupedNodeName": "gendersUsers",
+                "groupedNodeName": "gendersDifference",
                 "rootNodeName": "root"
-            }
+            },
+            "schemaName": "getAnimeGenderComparison"
         },
-        "getTotalNumberOfFemaleViewers": {
-            "query": "SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE gender = 'Male' AND ratinglist.anime_id = 1",
+        "getTotalNumberOfMaleFemaleViewers": {
+            "query": "SELECT ( SELECT COUNT(ratinglist.user_id) FROM ratinglist ) AS totalViewers, ( SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' ) AS male, ( SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' ) AS female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id GROUP BY Male",
             "XMLSettings": {
-                "groupedNodeName": "gendersUsers",
+                "groupedNodeName": "gendersDifference",
                 "rootNodeName": "root"
-            }
+            },
+            "schemaName": "getTotalAnimeGenderComparison"
         },
-        "getTotalNumberOfMaleFemaleUsers": {
-            "query": "SELECT count(user_id) AS Total, (SELECT Count(gender)FROM userlist WHERE gender = 'Male') AS Male, (SELECT Count(gender) FROM userlist WHERE  gender = 'Female') AS Female FROM `userlist` GROUP BY Male, Female",
+         "getAnimeUserStatistics": {
+            "query": "SELECT userlist.user_id AS userId, userlist.username AS username, userlist.user_completed AS completed, userlist.user_dropped AS dropped, userlist.user_onhold AS onHold, userlist.user_plantowatch AS planToWatch, userlist.user_days_spent_watching AS watchTime, userlist.stats_rewatched AS rewatched, userlist.location, userlist.gender, userlist.join_date AS joinDate, ratinglist.rating, TIMESTAMPDIFF( YEAR, userlist.birth_date, '2018-06-29' ) AS age FROM `ratinglist` JOIN userlist ON ratinglist.user_id = userlist.user_id WHERE anime_id = ?",
             "XMLSettings": {
-                "groupedNodeName": "gendersUsers",
+                "groupedNodeName": "user",
                 "rootNodeName": "root"
-            }
+            },
+            "schemaName": "getAnimeUserStatistics"
         },
         "getUsers": {
             "query": "SELECT user_id AS userId, username, birth_date AS birthDate, gender, `location` FROM userlist",

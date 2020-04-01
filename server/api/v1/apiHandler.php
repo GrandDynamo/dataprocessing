@@ -32,15 +32,15 @@ $router->delete('/dataprocessing/api/v1/anime/{id}', function ($id) use ($apiFac
 $router->get('/dataprocessing/api/v1/topanimes/{amount}', function ($amount) use ($apiFactory) {
     return $apiFactory->executeSafeIdempotentQuery("getTopWatchedAnime", $amount);
 });
-$router->get('/dataprocessing/api/v1/animetotalviewersgenders/{animeid}', function ($animeId) use ($apiFactory) {
+$router->get('/dataprocessing/api/v1/gendercomparison/{animeid}', function ($animeId) use ($apiFactory) {
     //Due to how this query works and the backend is designed, i create copies of the user input and place them in an array.
     $animeId2 = [];
     $animeId3 = $animeId;   
     array_push($animeId2, $animeId3, $animeId3, $animeId3);
     return $apiFactory->executeSafeIdempotentQuery('getNumberOfMaleFemaleUsers', $animeId, $animeId2);
 });
-$router->get('/dataprocessing/api/v1/animes/{num}/wow/{idk}/wow', function () use ($apiFactory) {
-    return "Routed into option: <b>7</b>";
+$router->get('/dataprocessing/api/v1/animeuserstatistics/{animeid}', function ($animeId) use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery('getAnimeUserStatistics', $animeId);
 });
 $router->get('/dataprocessing/api/test/{nice}', function () use ($apiFactory) {
     return "Routed into option: <b>8</b>";

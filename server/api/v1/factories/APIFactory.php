@@ -141,7 +141,7 @@ class APIFactory
         $array = $mySQL->getResult();
         $parse->parseArray($array);
         //Header to return schema location to the consumer.
-        header('Link: http://localhost/dataprocessing/server/api/v1/schemas/draft-07/' . $queryName . '.json');
+        header('Link: http://localhost/dataprocessing/server/api/v1/schemas/draft-07/' . $this->getSchemaName($queryName) . '.json');
         header("Content-type: application/json; charset=utf-8");
         echo $parse->getParsedContent();
     }
