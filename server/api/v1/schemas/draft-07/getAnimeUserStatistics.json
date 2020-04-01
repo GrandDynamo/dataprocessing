@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAnimeUserStatistics.json",
+    "title": "Anime",
+    "description": "Information about the users having watched an Anime",
+    "type": "array",
+    "minItems": 1,
+    "items": {
+        "type": "object",
+        "properties": {
+            "userId": {
+                "type": "integer"
+            },
+            "username": {
+                "type": "string"
+            },
+            "completed": {
+                "type": "integer"
+            },
+            "dropped": {
+                "type": "integer"
+            },
+            "onHold": {
+                "type": "integer"
+            },
+            "planToWatch": {
+                "type": "integer"
+            },
+            "watchTime": {
+                "type": "integer"
+            },
+            "rewatched": {
+                "type": "integer"
+            },
+            "location": {
+                "type": "string"
+            },
+            "gender": {
+                "type": "string"
+            },
+            "joinDate": {
+                "type": "string"
+            },
+            "rating": {
+                "type": "integer"
+            },
+            "age": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "userId",
+            "username"
+        ]
+    }
+}

@@ -39,7 +39,7 @@ $router->get('/dataprocessing/api/v1/gendercomparison/{animeid}', function ($ani
     array_push($animeId2, $animeId3, $animeId3, $animeId3);
     return $apiFactory->executeSafeIdempotentQuery('getNumberOfMaleFemaleUsers', $animeId, $animeId2);
 });
-$router->get('/dataprocessing/api/v1/animeuserstatistics/{animeid}', function ($animeId) use ($apiFactory) {
+$router->get('/dataprocessing/api/v1/animeuserstats/{animeid}', function ($animeId) use ($apiFactory) {
     return $apiFactory->executeSafeIdempotentQuery('getAnimeUserStatistics', $animeId);
 });
 $router->get('/dataprocessing/api/test/{nice}', function () use ($apiFactory) {
