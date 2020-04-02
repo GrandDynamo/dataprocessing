@@ -5,16 +5,18 @@
                 <xs:element name="anime" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="animeId" type="xs:integer" minOccurs="1" maxOccurs="1"//>
-                            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"//>
-                            <xs:element name="genre" type="xs:string" minOccurs="1" maxOccurs="1"//>
-                            <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1"//>
-                            <xs:element name="episodes" type="xs:integer" minOccurs="1" maxOccurs="1"//>
+                            <xs:element name="animeId" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="genre" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="views" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="episodes" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="rating" type="xs:string" minOccurs="1" maxOccurs="1"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-           <xs:attribute name="schemaLocation" type="xs:string" use="required" />
+            <xs:attribute name="schemaLocation" type="xs:string" use="required" />
         </xs:complexType>
     </xs:element>
 </xs:schema>

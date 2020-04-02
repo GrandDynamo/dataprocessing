@@ -8,7 +8,7 @@
     "items": {
         "type": "object",
         "properties": {
-            "id": {
+            "animeId": {
                 "type": "integer"
             },
             "name": {
@@ -30,7 +30,7 @@
                 "type": "string"
             }
         },
-        "required": ["id","name"]
+        "required": ["animeId","name"]
     }
 }
 

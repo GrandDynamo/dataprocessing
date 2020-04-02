@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"
         integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
@@ -19,6 +21,10 @@
 
     <title>Anime Statistics</title>
     <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         body {
             padding: 0;
             margin: 0;
@@ -28,8 +34,10 @@
 
         #animeStatistics {
             display: none;
-            width: 100vw;
-            height: 1000px;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            scrollbar-width: none;
         }
 
         #arrowDownButton {
@@ -52,27 +60,122 @@
             height: 100vh;
         }
 
+        #statsContainer {
+            /* display: block; */
+            width: 100%;
+            height: 100%;
+
+        }
+
         #bottomStats {
+            /* height: max-content; */
+            height: 400px;
+            display: block;
+        }
+
+        #ratingAndGenderStats {
             display: flex;
             flex-direction: row;
-            height: 40%;
+            height: 100%;
+            width: 100%;
         }
 
         #animeUserRatingsChart {
-            /* width: 600px; */
+            width: 50%;
             flex: 1;
         }
 
+        #animeUsersRatingStatsChart {
+            height: 100%;
+            width: 100%;
+        }
+
+        #genderComparisonChart {
+            width: 100%;
+        }
+
         #genderChart {
-            /* width: 500px; */
-            /* height: 500px; */
+            width: 50%;
+            height: 100%;
             flex: 1;
         }
 
         #animeUserAgeChart {
-            /* width: 500px; */
-            /* flex: 1; */
-            flex: 1
+            /* height: 100%; */
+            display: block;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #animeUsersAgeStatsChart {
+            height: 50vh;
+        }
+
+        #titleName {
+            text-align: center;
+        }
+
+        #underlineStats {
+            /* text-align: center; */
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        #underlineStats>div {
+            flex: 1;
+            text-align: center;
+            /* font-size: 1.5em; */
+        }
+
+        #underlineStats .topStatsTitle {
+            font-size: 1.8em;
+        }
+
+        #topStatsAnimeTitle {
+            font-weight: lighter;
+            font-size: 3em;
+            padding-left: 15%;
+            padding-right: 15%;
+            padding-bottom: 8px;
+            border-bottom: 2px dotted black;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        #animeTitle {
+            font-size: 3em;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            /* font-style: oblique; */
+            font-weight: bolder;
+            margin-top: 30px;
+            display: none;
+        }
+
+        #underlineStats .topStatsValue {
+            font-size: 1.4em;
+            display: none;
+            font-style: oblique;
+            font-weight: bolder;
+        }
+
+        .topStatsTitle>p {
+            margin-bottom: 15px;
+            /* border-color: lightcoral; */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15%;
+            padding-right: 15%;
+            padding-bottom: 8px;
+            border-bottom: 2px dotted black;
+            width: max-content;
+        }
+
+        #arrowDownButton {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -80,26 +183,71 @@
 <body>
     <div id="topAnimeChart">
         <canvas id="topAnimeGraph"></canvas>
-
     </div>
 
     <div id="animeStatistics">
         <div>
             <img src="media/Arrow-down.svg" alt="Arrow Down" id="arrowDownButton">
         </div>
-        <div id="bottomStats">
-            <div id="animeUserRatingsChart">
-                <canvas id="animeUsersRatingStatsChart"></canvas>
+        <div id="topStats">
+            <div id="titleName">
+                <!-- <div id="topStatsAnimeTitle">
+                    Title
+                </div> -->
+                <div id="animeTitle">
+                    {animePlaceHolderTitle}
+                </div>
             </div>
-            <div id="genderChart">
-                <canvas id="genderComparisonChart"></canvas>
+            <div id="underlineStats">
+                <div>
+                    <div class="topStatsTitle">
+                        <p>Genre(s)</p>
+                    </div>
+                    <div id="genreType" class="topStatsValue">
+                        {genrePlaceholder}
+                    </div>
+                </div>
+                <div>
+                    <div class="topStatsTitle">
+                        <p>Episode Count</p>
+                    </div>
+                    <div id="episodesCountType" class="topStatsValue">
+                        {episodesPlaceholder}
+                    </div>
+                </div>
+                <div>
+                    <div class="topStatsTitle">
+                        <p>Average Rating</p>
+                    </div>
+                    <div id="averageRatingType" class="topStatsValue">
+                        {averageRatingPlaceholder}
+                    </div>
+                </div>
+                <div>
+                    <div class="topStatsTitle">
+                        <p>Average age viewer</p>
+                    </div>
+                    <div id="averageViewerAgeType" class="topStatsValue">
+                        {averageViewerAgePlaceholder}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="statsContainer">
+            <div id="bottomStats">
+                <div id="ratingAndGenderStats">
+                    <div id="animeUserRatingsChart">
+                        <canvas id="animeUsersRatingStatsChart"></canvas>
+                    </div>
+                    <div id="genderChart">
+                        <canvas id="genderComparisonChart"></canvas>
+                    </div>
+                </div>
             </div>
             <div id="animeUserAgeChart">
                 <canvas id="animeUsersAgeStatsChart"></canvas>
             </div>
         </div>
-
-
     </div>
     <!-- Random number generator, Used for testing -->
     <script>
@@ -134,7 +282,7 @@
                     myChart.update();
                     mainMenuTopAnimeNames[k] = i.name;
                     mainMenuTopAnimeViews[k] = i.views;
-                    mainMenuTopAnimeIds[k] = i.id;
+                    mainMenuTopAnimeIds[k] = i.animeId;
                     mainMenuTopAnimeRatings[k] = i.rating;
                     return new Promise(function (resolve) {
                         setTimeout(resolve, 150);
@@ -180,15 +328,23 @@
                     ]
                 },
                 options: {
+                    hover: {
+                        onHover: function (e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
+                    },
                     legend: {
                         labels: {
                             filter: function (item, chart) {
                                 // Remove legend item.
                                 return !item.text.includes('animeId');
                             },
-
+                            fontSize: 15,
                         }
                     },
+
                     scales: {
                         xAxes: [{
                             stacked: true,
@@ -211,7 +367,7 @@
                             scaleLabel: {
                                 display: true,
                                 labelString: 'Views',
-                                fontSize: 24,
+                                fontSize: 30,
                             },
                         }, {
                             type: 'linear',
@@ -222,7 +378,7 @@
                             scaleLabel: {
                                 display: true,
                                 labelString: 'Rating',
-                                fontSize: 28,
+                                fontSize: 30,
                             },
                             gridLines: {
                                 drawOnChartArea: false
@@ -262,10 +418,13 @@
             var animeUsersRatingsStatsGraphMaleRatings = [];
             var animeUsersRatingsStatsGraphFemaleRatings = [];
             var animeUsersRatinsStatsGraphAverageRatings = [];
+            var animeRatingsAboveZero = 0;
+            var animeRatingsAboveZeroSum = 0;
             $.each(dataTagsArray, function (k, i) {
 
                 if (i.rating > 0) {
-                    // console.log(i.rating);
+                    animeRatingsAboveZero++;
+                    animeRatingsAboveZeroSum += i.rating;
                     if (i.gender == "Male") {
                         animeUsersRatingsStatsGraphMaleRatings.push(i.rating);
                     }
@@ -275,6 +434,10 @@
 
                 }
             });
+
+            //Sets the average rating type element with the average calculated rating.
+            var averageRating = Math.round(((animeRatingsAboveZeroSum / animeRatingsAboveZero) + Number.EPSILON) * 100) / 100;
+            document.getElementById('averageRatingType').innerHTML = averageRating;
 
             //Initialized the male ratings array.
             animeMaleRatingsCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -393,7 +556,15 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                fontSize: 15,
+                            }
+                        },
                         yAxes: [{
                             ticks: {
                                 // padding: 100,
@@ -421,10 +592,18 @@
                     },
                     title: {
                         display: true,
-                        text: 'Score distribution based on gender.'
+                        text: 'Score distribution by gender.',
+                        fontSize: 20,
                     },
                     animation: {
                         duration: 2000,
+                    },
+                    hover: {
+                        onHover: function (e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
                     },
                 }
             });
@@ -433,20 +612,24 @@
             var animeUsersAgesStatsGraphMaleRatings = [];
             var animeUsersAgesStatsGraphFemaleRatings = [];
             var animeUsersAgesStatsGraphAverageRatings = [];
+            var viewerAgesSum = 0;
+            var viewersAges = 0;
             $.each(dataTagsArray, function (k, i) {
-
-                if (i.rating > 0) {
-                    // console.log(i);
-                    if (i.gender == "Male") {
-                        animeUsersAgesStatsGraphMaleRatings.push(i.age);
-                    }
-                    else if (i.gender == "Female") {
-                        animeUsersAgesStatsGraphFemaleRatings.push(i.age);
-                    }
-
+                viewersAges++;
+                viewerAgesSum += i.age;
+                if (i.gender == "Male") {
+                    animeUsersAgesStatsGraphMaleRatings.push(i.age);
+                }
+                else if (i.gender == "Female") {
+                    animeUsersAgesStatsGraphFemaleRatings.push(i.age);
                 }
             });
 
+            //Sets the average viewers age type element with the average calculated age.
+            var averageViewersAge = Math.round(((viewerAgesSum / viewersAges) + Number.EPSILON) * 100) / 100;
+            document.getElementById('averageViewerAgeType').innerHTML = averageViewersAge;
+
+            // document.getElementById('episodesCountType').innerHTML = retrievedData[0].episodes;
             //Initialized the male ratings array.
             var animeMaleAgesCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             //Initialized the female ratings array.
@@ -551,7 +734,6 @@
                 }
             });
             for (let arrayIndex = 0; arrayIndex < animeMaleAgesCounts.length; arrayIndex++) {
-                console.log("yeee");
                 var maleCount = animeMaleAgesCounts[arrayIndex];
                 var femaleCount = animeFemaleAgesCounts[arrayIndex];
                 var totalCount = maleCount + femaleCount;
@@ -565,7 +747,7 @@
             animeUserStatsAgeChart = new Chart(animeUsersAgeStatsChart, {
                 type: 'line',
                 data: {
-                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                    labels: ["0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", ">70"],
                     datasets: [{
                         data: animeMaleAgesCounts,
                         label: "Male",
@@ -589,16 +771,24 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                        labels: {
+                            fontSize: 15,
+                        }
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
                                 // padding: 100,
-                                stepSize: 0.1,
+                                stepSize: 10,
                                 maxTicksLimit: 10,
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Times Rated',
+                                labelString: 'Amount',
                                 fontSize: 20,
                             }
                         }],
@@ -610,17 +800,25 @@
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Scores',
+                                labelString: 'Age categories',
                                 fontSize: 20,
                             }
                         }]
                     },
                     title: {
                         display: true,
-                        text: 'Age distribution based on gender.'
+                        text: 'Age distribution by gender.',
+                        fontSize: 20,
                     },
                     animation: {
                         duration: 2000,
+                    },
+                    hover: {
+                        onHover: function (e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
                     },
                 }
             })
@@ -663,10 +861,29 @@
                     }]
                 },
                 options: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            fontSize: 15,
+                        }
+                    },
                     //cutoutPercentage: 40,
                     responsive: true,
+                    maintainAspectRatio: false,
                     animation: {
                         duration: 2000,
+                    },
+                    title: {
+                        display: true,
+                        text: 'Viewers distribution by gender.',
+                        fontSize: 20,
+                    },
+                    hover: {
+                        onHover: function (e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
                     },
                 }
             });
@@ -694,6 +911,7 @@
             var selectedAnimeId = myChart.data.datasets[2].data[activePoints[0]._index];
             getGenderComparisonData(selectedAnimeId);
             getAnimeUsersStats(selectedAnimeId);
+            getAnimeData(selectedAnimeId);
             console.log("Clicked Anime ID: ", myChart.data.datasets[2].data[activePoints[0]._index]);
             // console.log(activePoints[0]._index);
         };
@@ -708,11 +926,15 @@
 
                 $("#animeStatistics").slideDown("slow");
                 $("#topAnimeChart").slideUp(800);
+                $(".topStatsValue").fadeIn(3000);
+                $("#animeTitle").fadeIn(2000);
                 // $("#topAnimeChart").hide();
             } else {
                 $("#topAnimeChart").slideDown(600);
                 setTimeout(() => {
                     $("#animeStatistics").hide();
+                    $(".topStatsValue").hide();
+                    $("#animeTitle").hide();
                 }, 610);
 
             }
@@ -753,7 +975,7 @@
                         schemaLocation = xhr.getResponseHeader('Link');
                     }
                     //The tags that need to be retrieved.
-                    var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];
+                    var keyNameArray = ['name', 'views', 'animeId', 'rating', 'episodes'];
 
                     //Main logic of calling the functions.
                     executeGenderChartFunctions();
@@ -765,9 +987,55 @@
             })
         }
 
+        function getAnimeData(animeId) {
+            $.ajax({
+                url: `http://localhost/dataprocessing/api/v1/animes/${animeId}`,
+                type: 'GET',
+                contentType: `application/${contentType}`,
+                success: function (data, status, xhr) {
+                    var schemaLocation = null;
+                    var retrievedDataValidatable = data;
+                    var retrievedData = data;
+                    if (contentType === 'xml') {
+                        retrievedAnimeData2 = data;
+
+                        newNode = retrievedAnimeData2.createElement("anime");
+
+                        retrievedDataValidatable = (new XMLSerializer()).serializeToString(retrievedData);
+                        retrievedAnimeData2.getElementsByTagName("root")[0].appendChild(newNode);
+
+                        var parsedRetrievedData = xmlToJson.parse(retrievedAnimeData2);
+                        parsedRetrievedData.root.anime.pop();
+                        
+                        retrievedData = Object.entries(Object.entries(parsedRetrievedData)[0][1])[2][1];
+                        schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
+
+                    }
+                    else if (contentType === 'json') {
+                        schemaLocation = xhr.getResponseHeader('Link');
+                    }
+                    //The tags that need to be retrieved.
+                    var keyNameArray = ['name', 'views', 'animeId', 'rating', 'episodes'];
+
+
+
+                    //Main logic of calling the functions.
+                    executeGenderChartFunctions();
+                    async function executeGenderChartFunctions() {
+                        await validation(retrievedDataValidatable, await getSchema(schemaLocation));
+                        //     await mainMenuTopAnimeChart(await convertJSONtoGraphData(retrievedData, keyNameArray));
+                        await console.log("BUGPLACE: ", retrievedData[0]);
+                        await (document.getElementById('animeTitle').innerHTML = retrievedData[0].name);
+                        await (document.getElementById('genreType').innerHTML = retrievedData[0].genre);
+                        await (document.getElementById('episodesCountType').innerHTML = retrievedData[0].episodes);
+                    }
+                },
+            })
+        }
+
         function getGenderComparisonData(animeId) {
             $.ajax({
-                url: `http://localhost/dataprocessing/api/v1/gendercomparison/${animeId}`,
+                url: `http://localhost/dataprocessing/api/v1/animes/${animeId}/gendercomparison/`,
                 type: 'GET',
                 contentType: `application/${contentType}`,
                 success: function (data, status, xhr) {
@@ -825,7 +1093,7 @@
                         schemaLocation = xhr.getResponseHeader('Link');
                     }
                     //The tags that need to be retrieved.
-                    var keyNameArray = ['name', 'views', 'id', 'rating', 'episodes'];
+                    var keyNameArray = ['name', 'views', 'animeId', 'rating', 'episodes'];
 
                     //Main logic of calling the functions.
                     executeAnimeUsersStatsFunctions();

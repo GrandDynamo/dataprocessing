@@ -80,6 +80,7 @@ class Router
         $receivedURLArray = explode('/', trim($formattedRoute, '/'));
 
         $variableArray = array();
+        $tempVariableArray = array();
         //Loop through de dictionary containing routes.
         foreach ($methodDictionary as $method => $value) {
 
@@ -87,33 +88,62 @@ class Router
             $routingURLArray = explode('/', trim($method, '/'));
 
             //Iterate through every routing URL key.
+            $concatKey = "";
+            $indexing = 0;
+            $exit = false;
             foreach ($routingURLArray as $key => $value) {
                 // Check if the recieved also array contains that key.
                 if (isset($receivedURLArray[$key])) {
                     //Step into if statement when key are the same.
+                    // echo $value. " ";
                     if ($routingURLArray[$key] === $receivedURLArray[$key]) {
-                        //Break out of this iteration and lets loop go to next iteration.
-                        continue;
-                    } elseif (preg_match('/{(.*?)}/', $value)) {
+                        //Break out of this iteration and let loop go to next iteration.
+                        // continue;
+                    }
+                    $concatKey = $concatKey."/".$value;
+                    if ($concatKey) {
+                        # code...
+                    }
+                    // var_dump(preg_match('/{(.*?)}/', $value));
+                    if (preg_match('/{(.*?)}/', $value)) {
                         //Stores user variable in array.
-                        $variableArray[] = $receivedURLArray[$key];
+                        $variableArray[] = $receivedURLArray[$key];     
                         //Replace variable inside the routing uri to a value recieved by the user.
                         $routingURLArray[$key] = $receivedURLArray[$key];
+                        //Check receivedArray and routingArray are the same.
+                        if($routingURLArray === $receivedURLArray){
+                            //
+                            $exitAlgorithm = true;
+
+                        }
                     }
                 }
             }
 
+            //Check if exitAlgorithm flag is set.
+            if ($exitAlgorithm === true) {
+                for ($i=0; $i < \count($variableArray); $i++) { 
+                    $tempVariableArray[] = $variableArray[$i];
+                }
+                $variableArray = $tempVariableArray;
+            }else{
+                $variableArray = [];
+            }
             //Step into if statement when the received and routing arrays match.
             if ($routingURLArray === $receivedURLArray) {
+               
                 //@test See if everything works when commented out.
                 // $formattedRoute = "/" . implode("/", $routingURLArray);
 
                 //Only go in if the route exists if the  Routes without variables wont go in here.
                 if (isset($methodDictionary[$method])) {
+                    
                     //Go inside when the routing dictionary does not contain the changed uri. Routes without variables wont go in here. Routes with variables inside need this to change the route path.
                     if (!isset($methodDictionary[$formattedRoute])) {
+                        
                         //Replace uri in dictionary with changed uri.
                         $methodDictionary[$formattedRoute] = $methodDictionary[$method];
+
                         unset($methodDictionary[$method]);
                     }
                 }
@@ -131,7 +161,10 @@ class Router
             if ($this->request->requestMethod === "PUT") {
                 call_user_func_array($method, array($this->request, $variableArray));
             } elseif ($this->request->requestMethod === "GET" || $this->request->requestMethod === "DELETE") {
-                call_user_func_array($method, $variableArray);
+                /**
+                 * @todo Iets mooiers doen dan de temp variable. Misschien deze block of code in een aparte method??.
+                 */
+                call_user_func_array($method, $tempVariableArray);
             }
         } elseif (!isset($methodDictionary[$formattedRoute])) {
             $this->badRequestHandler();

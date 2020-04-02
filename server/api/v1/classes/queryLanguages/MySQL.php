@@ -32,7 +32,6 @@ class MySQL
      */
     public function executeQuery(string $query, ...$queryParams): bool
     {
-
         if (!$stmt = $this->connection->prepare($query)) {
             die("Error prepare");
         }
@@ -47,7 +46,13 @@ class MySQL
                         $queryParams2[] = $queryParams[1][$i];
                     }
                     $queryParams = $queryParams2;
-                } else {
+                } elseif (isset($queryParams)){
+                    /**
+                     * @todo Here i have fixed  an internal error when having just 1 value in the second parameter route.
+                     * Make this more nicer than having an empty else if.
+                     */
+                }
+                else{
                     header("HTTP/1.0 500 Internal Server Error");
                     return false;
                 }
