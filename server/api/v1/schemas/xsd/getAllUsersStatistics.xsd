@@ -1,0 +1,28 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="userId" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="username" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="completed" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="dropped" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="onHold" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="planToWatch" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="watchTime" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="rewatched" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="location" type="xs:string" maxOccurs="1"/>
+                            <xs:element name="gender" type="xs:string" maxOccurs="1"/>
+                            <xs:element name="joinDate" type="xs:string" maxOccurs="1"/>
+                            <xs:element name="rating" type="xs:integer" maxOccurs="1"/>
+                            <xs:element name="age" type="xs:integer" maxOccurs="1"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="schemaLocation" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

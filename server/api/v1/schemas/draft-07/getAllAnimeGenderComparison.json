@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAnimeGenderComparison.json",
-    "title": "Gender Difference",
-    "description": "The gender difference that the Anime views is build up.",
+    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAllAnimeGenderComparison.json",
+    "title": "Gender Difference All Animes",
+    "description": "The gender difference that all the Anime views are build up.",
     "type": "array",
     "uniqueItems": true,
     "minItems": 1,
@@ -12,15 +12,15 @@
         "properties": {
             "totalViewers": {
                 "type": "integer",
-                "description": "The total views the Anime has."
+                "description": "The total views all the Animes have."
             },
             "male": {
                 "type": "integer",
-                "description": "The total male views the Anime has."
+                "description": "The total male views all the Anime have."
             },
             "female": {
                 "type": "integer",
-                "description": "The total female views the Anime has."
+                "description": "The total female views all the Anime have."
             }
         },
         "required": ["totalViewers","male", "female"]

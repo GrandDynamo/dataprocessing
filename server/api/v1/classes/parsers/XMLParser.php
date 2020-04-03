@@ -42,7 +42,7 @@ class XMLParser extends Parser
         if ($_xml === null) {
             // When root isnt defined use predefined root name (used in recursion).
             $_xml = new SimpleXMLElement($rootElement !== null ? $rootElement : '<' . $this->rootNodeName . '/>');
-            $_xml->addAttribute("xmlns:xmlns:xsi", "http://www.w3.org/2001/XMLSchema");
+            $_xml->addAttribute("xmlns:xmlns:xsi", "http://www.w3.org/2001/XMLSchema/");
 
             // Check if schema name is set. 
             if ($this->schemaName) {

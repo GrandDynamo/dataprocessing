@@ -67,6 +67,8 @@ class APIFactory
      * Can be used to execute Idempotent queries that are safe.
      * For example: GET.
      * And calls the appropiate method for returning content.
+     * 
+     * @todo Place XML type in else if so i can return something including the default content type when not matching.
      *
      * @param string $queryName
      * @param mixed ...$queryParams

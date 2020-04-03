@@ -20,12 +20,6 @@ class Request
     foreach ($_SERVER as $key => $value) {
       $this->{$this->toCamelCase($key)} = $value;
     }
-    // echo "<pre>";
-    // var_dump($this->requestMethod);
-    // echo "</pre>";
-    // echo "<pre>";
-    // var_dump($this);
-    // echo "</pre>";
   }
 
   private function toCamelCase($string)
@@ -52,6 +46,7 @@ class Request
       $body = array();
       foreach ($_POST as $key => $value) {
         $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        //Commented out, this can also be used. I need to look into the safety of using this instead of filter_input() function.
         // $body[$key] = $value;
       }
       return $body;
@@ -60,7 +55,7 @@ class Request
       parse_str(file_get_contents('php://input'), $_PUT);
       $body = array();
       foreach ($_PUT as $key => $value) {
-        // $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+
         $body[$key] = $value;
       }
       return $body;

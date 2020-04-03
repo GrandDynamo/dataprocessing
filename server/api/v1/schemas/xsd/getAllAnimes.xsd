@@ -8,7 +8,7 @@
                             <xs:element name="animeId" type="xs:integer" minOccurs="1" maxOccurs="1"/>
                             <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
                             <xs:element name="genre" type="xs:string" maxOccurs="1"/>
-                            <xs:element name="type" type="xs:string" maxOccurs="1"/>
+                            <xs:element name="type" type="xs:string"  maxOccurs="1"/>
                             <xs:element name="views" type="xs:integer" maxOccurs="1"/>
                             <xs:element name="episodes" type="xs:integer" maxOccurs="1"/>
                             <xs:element name="rating" type="xs:string" maxOccurs="1"/>

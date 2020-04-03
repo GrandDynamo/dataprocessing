@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAnimeRatings.json",
+    "title": "Anime",
+    "description": "Ratings that users have given an Anime",
+    "type": "array",
+    "uniqueItems": true,
+    "minItems": 1,
+    "items": {
+        "type": "object",
+        "properties": {
+            "animeId": {
+                "type": "integer",
+                "description": "The ID of an Anime."
+            },
+            "userId": {
+                "type": "integer",
+                "description": "The ID of an user."
+            },
+            "rating": {
+                "type": "integer",
+                "description": "The rating a user has given an Anime."
+            }
+        },
+        "required": ["animeId","userId"]
+    }
+}

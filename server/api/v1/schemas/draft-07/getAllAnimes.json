@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getTopWatchedAnime.json",
-    "title": "Top Anime",
-    "description": "Information about given amount of Anime in descending order.",
+    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAllAnimes.json",
+    "title": "Anime",
+    "description": "Information about an Anime",
     "type": "array",
     "uniqueItems": true,
     "minItems": 1,
@@ -11,23 +11,23 @@
         "properties": {
             "animeId": {
                 "type": "integer",
-                "description": "The ID of an Anime."
+                "description": "The id of an Anime."
             },
             "name": {
                 "type": "string",
-                "description": "The name of an Anime"
+                "description": "The name of the Anime."
             },
             "genre": {
                 "type": "string",
-                "description": "The genre(s) of an Anime."
+                "description": "The genre(s) of the Anime."
             },
             "type": {
                 "type": "string",
-                "description": "The type of release the Anime has, for example a TV or OVA."
+                "description": "The type of release the Anime has, for example TV or OVA"
             },
             "views": {
                 "type": "integer",
-                "description": "The amount of views the Anime has. Calculated with the ratings table."
+                "description": "The amount of people that have watched this Anime. Calculated with ratings."
             },
             "episodes": {
                 "type": "integer",
@@ -35,7 +35,7 @@
             },
             "rating": {
                 "type": "string",
-                "description": "The rating of an Anime. Calculated with the ratings table."
+                "description": "The rating the Anime has. This is calculated with the rating table."
             }
         },
         "required": ["animeId","name"]

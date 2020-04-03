@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getTopWatchedAnime.json",
+    "$id": "http://localhost/dataprocessing/server/api/v1/schemas/draft-07/getAllTopWatchedAnimes.json",
     "title": "Top Anime",
-    "description": "Information about given amount of Anime in descending order.",
+    "description": "Information about all Anime in descending order.",
     "type": "array",
     "uniqueItems": true,
     "minItems": 1,
