@@ -5,16 +5,9 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css"
-        integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.12.0/ajv.bundle.js"
-        integrity="sha256-u9xr+ZJ5hmZtcwoxwW8oqA5+MIkBpIp3M2a4AgRNH1o=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.12.0/ajv.min.js"
-        integrity="sha256-QZBaIVRF3ZHdyLzzW3WQQ5kVlqYeAgx4ccOv4ph/e/E=" crossorigin="anonymous"></script>
+    <script src="libraries/Chartjs/Chart.bundle.min.js"></script>
+    <script src="libraries/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="libraries/ajv/ajv.min.js"></script>
     <script src="libraries/xmlToJson-master/xmlToJson.js"></script>
     <script src="libraries/xml.js-master/xmllint.js"></script>
 
@@ -270,7 +263,6 @@
         mainMenuTopAnimeChart();
 
         function mainMenuTopAnimeChart(dataTagsArray) {
-            // console.log("dataTags: ", dataTagsArray);
             var mainMenuTopAnimeNames = [];
             var mainMenuTopAnimeViews = [];
             var mainMenuTopAnimeIds = [];
@@ -448,7 +440,6 @@
 
             //Filtring data for the rating anime users graph.
             $.each(animeUsersRatingsStatsGraphMaleRatings, function (k, i) {
-                // console.log(i);
                 if (i > 0 && i <= 1.4) {
                     animeMaleRatingsCounts[0]++;
                 }
@@ -481,7 +472,6 @@
                 }
             });
             $.each(animeUsersRatingsStatsGraphFemaleRatings, function (k, i) {
-                // console.log(i);
                 if (i > 0 && i <= 1.4) {
                     animeFemaleRatingsCounts[0]++;
                 }
@@ -517,8 +507,6 @@
                 var maleCount = animeMaleRatingsCounts[arrayIndex];
                 var femaleCount = animeFemaleRatingsCounts[arrayIndex];
                 var totalCount = maleCount + femaleCount;
-                // animeAverageRatingsCounts[arrayIndex] = Math.round(animeMaleRatingsCounts[arrayIndex] / animeFemaleRatingsCounts[arrayIndex]);
-                // console.log((animeMaleRatingsCounts[arrayIndex]), (animeFemaleRatingsCounts[arrayIndex]));
                 if (maleCount > 0 || femaleCount > 0) {
                     animeAverageRatingsCounts[arrayIndex] = (totalCount / 2);
 
@@ -685,7 +673,6 @@
                     animeMaleAgesCounts[14]++;
                 }
             });
-            console.log("Male Leeftijds: ", animeMaleAgesCounts);
             $.each(animeUsersAgesStatsGraphFemaleRatings, function (k, i) {
                 if (i <= 4) {
                     animeFemaleAgesCounts[0]++;
@@ -737,8 +724,6 @@
                 var maleCount = animeMaleAgesCounts[arrayIndex];
                 var femaleCount = animeFemaleAgesCounts[arrayIndex];
                 var totalCount = maleCount + femaleCount;
-                // animeAverageRatingsCounts[arrayIndex] = Math.round(animeMaleRatingsCounts[arrayIndex] / animeFemaleRatingsCounts[arrayIndex]);
-                // console.log((animeMaleRatingsCounts[arrayIndex]), (animeFemaleRatingsCounts[arrayIndex]));
                 if (maleCount > 0 || femaleCount > 0) {
                     animeAverageAgesCounts[arrayIndex] = (totalCount / 2);
 
@@ -913,7 +898,6 @@
             getAnimeUsersStats(selectedAnimeId);
             getAnimeData(selectedAnimeId);
             console.log("Clicked Anime ID: ", myChart.data.datasets[2].data[activePoints[0]._index]);
-            // console.log(activePoints[0]._index);
         };
     </script>
     <!-- Script for anime Stats panel. -->
@@ -928,7 +912,6 @@
                 $("#topAnimeChart").slideUp(800);
                 $(".topStatsValue").fadeIn(3000);
                 $("#animeTitle").fadeIn(2000);
-                // $("#topAnimeChart").hide();
             } else {
                 $("#topAnimeChart").slideDown(600);
                 setTimeout(() => {
@@ -1006,7 +989,7 @@
 
                         var parsedRetrievedData = xmlToJson.parse(retrievedAnimeData2);
                         parsedRetrievedData.root.anime.pop();
-                        
+
                         retrievedData = Object.entries(Object.entries(parsedRetrievedData)[0][1])[2][1];
                         schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
 
@@ -1023,8 +1006,6 @@
                     executeGenderChartFunctions();
                     async function executeGenderChartFunctions() {
                         await validation(retrievedDataValidatable, await getSchema(schemaLocation));
-                        //     await mainMenuTopAnimeChart(await convertJSONtoGraphData(retrievedData, keyNameArray));
-                        await console.log("BUGPLACE: ", retrievedData[0]);
                         await (document.getElementById('animeTitle').innerHTML = retrievedData[0].name);
                         await (document.getElementById('genreType').innerHTML = retrievedData[0].genre);
                         await (document.getElementById('episodesCountType').innerHTML = retrievedData[0].episodes);
@@ -1054,7 +1035,6 @@
                         parsedRetrievedGenderData.root.gendersDifference.pop();
                         // retrievedGenderData = parsedRetrievedGenderData;
                         retrievedGenderData = Object.entries(Object.entries(parsedRetrievedGenderData)[0][1])[2][1];
-                        // console.log("ParsedDate: ", Object.entries(Object.entries(parsedRetrievedGenderData)[0][1])[2][1]);
                         schemaGenderLocation = Object.entries(Object.entries(parsedRetrievedGenderData)[0][1])[1][1];
 
                     }
@@ -1119,7 +1099,6 @@
         //Validation of the retrieved data.
         function validation(retrievedData, schema) {
             if (contentType === 'json') {
-                console.log("Schema: ", schema);
                 console.log(ajv.validate(schema, retrievedData));
                 return retrievedData;
             }

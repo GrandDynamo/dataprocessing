@@ -59,16 +59,24 @@
             },
             "schemaName": "getAnimeGenderComparison"
         },
-        "getTotalNumberOfMaleFemaleViewers": {
+        "getAllNumberOfMaleFemaleViewers": {
             "query": "SELECT ( SELECT COUNT(ratinglist.user_id) FROM ratinglist ) AS totalViewers, ( SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' ) AS male, ( SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' ) AS female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id GROUP BY Male",
             "XMLSettings": {
                 "groupedNodeName": "gendersDifference",
                 "rootNodeName": "root"
             },
-            "schemaName": "getTotalAnimeGenderComparison"
+            "schemaName": "getAllAnimeGenderComparison"
         },
         "getAnimeUserStatistics": {
             "query": "SELECT userlist.user_id AS userId, userlist.username AS username, userlist.user_completed AS completed, userlist.user_dropped AS dropped, userlist.user_onhold AS onHold, userlist.user_plantowatch AS planToWatch, userlist.user_days_spent_watching AS watchTime, userlist.stats_rewatched AS rewatched, userlist.location, userlist.gender, userlist.join_date AS joinDate, ratinglist.rating, TIMESTAMPDIFF( YEAR, userlist.birth_date, '2018-06-29' ) AS age FROM `ratinglist` JOIN userlist ON ratinglist.user_id = userlist.user_id WHERE anime_id = ?",
+            "XMLSettings": {
+                "groupedNodeName": "user",
+                "rootNodeName": "root"
+            },
+            "schemaName": "getAnimeUserStatistics"
+        },
+        "getAllAnimeUserStatistics": {
+            "query": "SELECT userlist.user_id AS userId, userlist.username AS username, userlist.user_completed AS completed, userlist.user_dropped AS dropped, userlist.user_onhold AS onHold, userlist.user_plantowatch AS planToWatch, userlist.user_days_spent_watching AS watchTime, userlist.stats_rewatched AS rewatched, userlist.location, userlist.gender, userlist.join_date AS joinDate, ratinglist.rating, TIMESTAMPDIFF( YEAR, userlist.birth_date, '2018-06-29' ) AS age FROM `ratinglist` JOIN userlist ON ratinglist.user_id = userlist.user_id",
             "XMLSettings": {
                 "groupedNodeName": "user",
                 "rootNodeName": "root"

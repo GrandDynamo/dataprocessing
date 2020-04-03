@@ -61,6 +61,13 @@ $router->get('/dataprocessing/api/v1/animes/{animeid}/gendercomparison/', functi
     array_push($animeId2, $animeId3, $animeId3, $animeId3);
     return $apiFactory->executeSafeIdempotentQuery('getNumberOfMaleFemaleUsers', $animeId, $animeId2);
 });
+/**
+ * @todo Needs Schema
+ */
+$router->get('/dataprocessing/api/v1/animes/gendercomparison/', function () use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery('getAllNumberOfMaleFemaleViewers');
+});
+
 
 $router->get('/dataprocessing/api/v1/animeuserstats/{animeid}', function ($animeId) use ($apiFactory) {
     return $apiFactory->executeSafeIdempotentQuery('getAnimeUserStatistics', $animeId);
