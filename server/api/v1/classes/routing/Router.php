@@ -86,23 +86,19 @@ class Router
 
             //Explode Routing URL into an Array.
             $routingURLArray = explode('/', trim($method, '/'));
-
+            //Initialization.
+            $exitAlgorithm = false;
             //Iterate through every routing URL key.
-            $concatKey = "";
-            $indexing = 0;
-            $exit = false;
             foreach ($routingURLArray as $key => $value) {
+
                 // Check if the recieved also array contains that key.
                 if (isset($receivedURLArray[$key])) {
+
                     //Step into if statement when key are the same.
-                    // echo $value. " ";
                     if ($routingURLArray[$key] === $receivedURLArray[$key]) {
+
                         //Break out of this iteration and let loop go to next iteration.
-                        // continue;
-                    }
-                    $concatKey = $concatKey."/".$value;
-                    if ($concatKey) {
-                        # code...
+                        continue;
                     }
                     // var_dump(preg_match('/{(.*?)}/', $value));
                     if (preg_match('/{(.*?)}/', $value)) {
@@ -112,9 +108,8 @@ class Router
                         $routingURLArray[$key] = $receivedURLArray[$key];
                         //Check receivedArray and routingArray are the same.
                         if($routingURLArray === $receivedURLArray){
-                            //
+                            //Set exit flag on true when the arrays are the same.
                             $exitAlgorithm = true;
-
                         }
                     }
                 }
@@ -122,7 +117,7 @@ class Router
 
             //Check if exitAlgorithm flag is set.
             if ($exitAlgorithm === true) {
-                for ($i=0; $i < \count($variableArray); $i++) { 
+                for ($i=0; $i < count($variableArray); $i++) { 
                     $tempVariableArray[] = $variableArray[$i];
                 }
                 $variableArray = $tempVariableArray;
@@ -159,7 +154,7 @@ class Router
                 call_user_func_array($method, array($this->request));
             }
             if ($this->request->requestMethod === "PUT") {
-                call_user_func_array($method, array($this->request, $variableArray));
+                call_user_func_array($method, array($this->request, $tempVariableArray));
             } elseif ($this->request->requestMethod === "GET" || $this->request->requestMethod === "DELETE") {
                 /**
                  * @todo Iets mooiers doen dan de temp variable. Misschien deze block of code in een aparte method??.

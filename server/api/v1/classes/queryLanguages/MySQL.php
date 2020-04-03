@@ -48,7 +48,7 @@ class MySQL
                     $queryParams = $queryParams2;
                 } elseif (isset($queryParams)){
                     /**
-                     * @todo Here i have fixed  an internal error when having just 1 value in the second parameter route.
+                     * @todo Here i have fixed an internal error when having just 1 value in the second parameter route.
                      * Make this more nicer than having an empty else if.
                      */
                 }
@@ -90,7 +90,7 @@ class MySQL
             $this->result = $result->fetch_all(MYSQLI_ASSOC);
 
             /**
-             * Uitzoeken welke beter past bij mijn usecase, de array_filter manier die checked of alles null of 0 is 
+             * @todo Uitzoeken welke beter past bij mijn usecase, de array_filter manier die checked of alles null of 0 is 
              * of de in_array manier waarbij er maar 1 value null hoeft te zijn.
              */
             //Check if there is a NULL value returned by MySQL.

@@ -6,6 +6,35 @@
         "name": "anime-db"
     },
     "querySettings": {
+        "getAnime": {
+            "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, NULLIF(COUNT(ratinglist.user_id), 0) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id WHERE animelist.anime_id = ?",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            },
+            "schemaName": "getAnime"
+        },
+        "getAnimes": {
+            "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, COUNT(ratinglist.user_id) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getAnimeRatings": {
+            "query": "SELECT ratinglist.anime_id AS animeId, ratinglist.user_id as userId, ratinglist.rating AS rating FROM `ratinglist` WHERE `anime_id` = ? AND `rating` > ?",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
+        "getAllAnimeRatings": {
+            "query": "SELECT ratinglist.anime_id AS animeId, ratinglist.user_id AS userId, ratinglist.rating AS rating FROM `ratinglist` WHERE rating > ? ORDER BY `animeId`",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            }
+        },
         "getTopWatchedAnime": {
             "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, COUNT(ratinglist.user_id) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id ORDER BY views DESC LIMIT ?",
             "XMLSettings": {
@@ -13,6 +42,14 @@
                 "rootNodeName": "root"
             },
             "schemaName": "getTopWatchedAnime"
+        },
+        "getAllTopWatchedAnimes": {
+            "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, COUNT(ratinglist.user_id) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id ORDER BY views DESC",
+            "XMLSettings": {
+                "groupedNodeName": "anime",
+                "rootNodeName": "root"
+            },
+            "schemaName": "getAllTopWatchedAnimes"
         },
         "getNumberOfMaleFemaleUsers": {
             "query": "SELECT (SELECT COUNT(ratinglist.user_id) FROM ratinglist WHERE ratinglist.anime_id = ?) AS totalViewers, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Male' AND ratinglist.anime_id = ?) AS male, (SELECT COUNT(gender) FROM ratinglist JOIN userlist ON userlist.user_id = ratinglist.user_id WHERE userlist.gender = 'Female' AND ratinglist.anime_id = ?) AS female FROM animelist JOIN ratinglist ON ratinglist.anime_id = animelist.anime_id WHERE ratinglist.anime_id = ? GROUP BY Male",
@@ -30,7 +67,7 @@
             },
             "schemaName": "getTotalAnimeGenderComparison"
         },
-         "getAnimeUserStatistics": {
+        "getAnimeUserStatistics": {
             "query": "SELECT userlist.user_id AS userId, userlist.username AS username, userlist.user_completed AS completed, userlist.user_dropped AS dropped, userlist.user_onhold AS onHold, userlist.user_plantowatch AS planToWatch, userlist.user_days_spent_watching AS watchTime, userlist.stats_rewatched AS rewatched, userlist.location, userlist.gender, userlist.join_date AS joinDate, ratinglist.rating, TIMESTAMPDIFF( YEAR, userlist.birth_date, '2018-06-29' ) AS age FROM `ratinglist` JOIN userlist ON ratinglist.user_id = userlist.user_id WHERE anime_id = ?",
             "XMLSettings": {
                 "groupedNodeName": "user",
@@ -49,42 +86,6 @@
             "query": "SELECT user_id AS userId, username, birth_date AS birthDate, gender, `location` FROM userlist WHERE user_id = ?",
             "XMLSettings": {
                 "groupedNodeName": "user",
-                "rootNodeName": "root"
-            }
-        },
-        "getAnimes": {
-            "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, COUNT(ratinglist.user_id) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id GROUP BY ratinglist.anime_id",
-            "XMLSettings": {
-                "groupedNodeName": "anime",
-                "rootNodeName": "root"
-            }
-        },
-        "getAnimeOld": {
-            "query": "SELECT anime_id AS animeId, name, genre, type, episodes FROM animelist WHERE anime_id = ?",
-            "XMLSettings": {
-                "groupedNodeName": "anime",
-                "rootNodeName": "root"
-            }
-        },
-        "getAnime": {
-            "query": "SELECT animelist.anime_id AS animeId, animelist.name, animelist.genre AS genre, animelist.type AS type, NULLIF(COUNT(ratinglist.user_id), 0) AS views, animelist.episodes, AVG(ratinglist.rating) AS rating FROM `ratinglist` JOIN animelist ON ratinglist.anime_id = animelist.anime_id WHERE animelist.anime_id = ?",
-            "XMLSettings": {
-                "groupedNodeName": "anime",
-                "rootNodeName": "root"
-            },
-            "schemaName": "getAnime"
-        },
-        "getRatings": {
-            "query": "SELECT * FROM `ratinglist` ORDER BY `user_id`",
-            "XMLSettings": {
-                "groupedNodeName": "anime",
-                "rootNodeName": "root"
-            }
-        },
-        "getAnimeRatings": {
-            "query": "SELECT ratinglist.anime_id AS animeId, ratinglist.user_id as userId, ratinglist.rating AS rating FROM `ratinglist` WHERE `anime_id` = ? AND `rating` > ?",
-            "XMLSettings": {
-                "groupedNodeName": "anime",
                 "rootNodeName": "root"
             }
         },

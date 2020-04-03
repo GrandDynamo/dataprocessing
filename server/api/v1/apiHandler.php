@@ -19,6 +19,10 @@ $router->get('/dataprocessing/api/v1/animes/{id}', function ($id) use ($apiFacto
     return $apiFactory->executeSafeIdempotentQuery("getAnime", $id);
 });
 
+$router->get('/dataprocessing/api/v1/animes/', function () use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery("getAnimes");
+});
+
 /**
  * FIXED, but needs to be tested more with more variable lookalikes.
  */
@@ -26,8 +30,11 @@ $router->get('/dataprocessing/api/v1/animeratings/{animeid}/{higherthen}', funct
     return $apiFactory->executeSafeIdempotentQuery("getAnimeRatings", $animeRatings, $higherThen);
 });
 
-$router->get('/dataprocessing/api/v1/animes/', function () use ($apiFactory) {
-    return $apiFactory->executeSafeIdempotentQuery("getAnimes");
+/**
+ * @todo Needs Schema
+ */
+$router->get('/dataprocessing/api/v1/animeratings/{higherthen}', function ($higherThen) use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery("getAllAnimeRatings", $higherThen);
 });
 
 /**
@@ -36,11 +43,19 @@ $router->get('/dataprocessing/api/v1/animes/', function () use ($apiFactory) {
 $router->get('/dataprocessing/api/v1/topanimes/{amount}', function ($amount) use ($apiFactory) {
     return $apiFactory->executeSafeIdempotentQuery("getTopWatchedAnime", $amount);
 });
+
+/**
+ * @todo Needs Schema
+ */
+$router->get('/dataprocessing/api/v1/topanimes/', function () use ($apiFactory) {
+    return $apiFactory->executeSafeIdempotentQuery("getAllTopWatchedAnimes");
+});
+
 /**
  * @todo Need to add a new query and route that returns all animes when no ID is given.
  */
 $router->get('/dataprocessing/api/v1/animes/{animeid}/gendercomparison/', function ($animeId) use ($apiFactory) {
-    //Due to how this query works and the backend is designed, i create copies of the user input and place them in an array.
+    //Due to how this query works and the backend is designed, i need to create copies of the user input and place them in an array.
     $animeId2 = [];
     $animeId3 = $animeId;
     array_push($animeId2, $animeId3, $animeId3, $animeId3);
