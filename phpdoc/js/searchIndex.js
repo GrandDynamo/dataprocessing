@@ -266,6 +266,61 @@ Search.appendIndex(
             "summary": "",
             "url": "../classes/classes-routing-Router.html#property_supportedHttpMethods"
         },                {
+            "fqsen": "\\connections\\Database",
+            "name": "Database",
+            "summary": "",
+            "url": "../classes/connections-Database.html"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method___construct"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003AdbConnect\u0028\u0029",
+            "name": "dbConnect",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method_dbConnect"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003AgetTotalAnimeInDatabase\u0028\u0029",
+            "name": "getTotalAnimeInDatabase",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method_getTotalAnimeInDatabase"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003AgetTopTenWatchedAnime\u0028\u0029",
+            "name": "getTopTenWatchedAnime",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method_getTopTenWatchedAnime"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003AgetXML\u0028\u0029",
+            "name": "getXML",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method_getXML"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003AgetLimitedTopWatchedAnime\u0028\u0029",
+            "name": "getLimitedTopWatchedAnime",
+            "summary": "",
+            "url": "../classes/connections-Database.html#method_getLimitedTopWatchedAnime"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003A\u0024host",
+            "name": "host",
+            "summary": "",
+            "url": "../classes/connections-Database.html#property_host"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003A\u0024user",
+            "name": "user",
+            "summary": "",
+            "url": "../classes/connections-Database.html#property_user"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003A\u0024password",
+            "name": "password",
+            "summary": "",
+            "url": "../classes/connections-Database.html#property_password"
+        },                {
+            "fqsen": "\\connections\\Database\u003A\u003A\u0024database",
+            "name": "database",
+            "summary": "",
+            "url": "../classes/connections-Database.html#property_database"
+        },                {
             "fqsen": "\\factories\\APIFactory",
             "name": "APIFactory",
             "summary": "",
@@ -375,6 +430,11 @@ Search.appendIndex(
             "name": "routing",
             "summary": "",
             "url": "../namespaces/classes-routing.html"
+        },                {
+            "fqsen": "\\connections",
+            "name": "connections",
+            "summary": "",
+            "url": "../namespaces/connections.html"
         },                {
             "fqsen": "\\factories",
             "name": "factories",
