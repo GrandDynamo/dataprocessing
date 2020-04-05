@@ -3,17 +3,17 @@
 
 An API for my school assignment.
 
+## Introduction
+<p>Welcome to the MAL-API. This project is made for a school assignment where i needed to process data from a database to a consumer application. The reason it is called 'MAL-API', is because i use data from MyAnimeList in my database and this API parses this data.</p>
+
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine. Theze instructions use Windows 10 as operating system.
-
-## Introduction
-<p>Welcome to my API. This project is made for a school assignment where i needed to process data from a database to a consumer application. The reason it is called 'MAL-API', is because i use data from MyAnimeList in my database and this API retrieves parses this data.</p>
+These instructions will get you a copy of the project up and running on your local machine. These instructions use Windows 10 as operating system.
 
 ### Software requisites
 There are a couple of things you will need before you can successfully run this API.
 
-My recommended route is the XAMPP route. And i will use thise route in the upcoming setup guide.
+My recommended route is the XAMPP route. And i will use this route in the upcoming setup guide.
 If you dont have `XAMPP 7.4.4` (<a href="https://www.apachefriends.org/download.html" title="download" target="_blank">download</a>) or higher installed. You need to install the newest version of XAMPP or the individual software.
 
 <b> The software you need to install when you dont have / want XAMPP installed.</b>
@@ -24,7 +24,7 @@ MariaDB 10.4.11 or higher. (<a href="https://downloads.mariadb.org/" title="Mari
 
 
 
-### Installing and Setup
+### Installation and Setup
 
 Now comes a step by step guide how to get everything up and running.
 
@@ -77,19 +77,26 @@ For the documentation of the API, i have used Swagger. It can be visited with yo
 <sub><b>Note:</b> I have included a small personal message in the introduction message of the API.</sub>
 In Swagger you can also try out queries. I have provided some sample data to use with inside the ZIP file i have turned in for the assignment. The file is called ```Swagger_test_data.docx```.
 
+<b>Step 12</b><br>
+At last we will take a look at the PHP code documentation. I have used PHPdoc to generate a web based documentation.<br>
+You can go to the documenation with the following URL: ```http://localhost/dataprocessing/phpdoc/```.
+
 ## Acknowledgments<br>
 I have used a couple of resources and libraries while working on this project.<br>
-The resources i have used are:<br>
+The resources i have used are displayed in the table beneath.
 <br>
-- Example of a basic routing script: <a href="https://medium.com/the-andela-way/how-to-build-a-basic-server-side-routing-system-in-php-e52e613cf241">source</a>
-- The official PHP documentation: <a href="https://www.php.net/manual/en/">source</a>
-- API documentation with Swagger: <a href="https://swagger.io/">source</a>
-- API Code documentation with PHPDoc: <a href="https://www.phpdoc.org/">source</a>
-- JavaScript Graphs with ChartJS: <a href="https://www.chartjs.org/">source</a>
-- Draft-07 Json validation with AJV: <a href="https://github.com/epoberezkin/ajv">source</a>
-- XSD XML validation with XML.js: <a href="https://syssgx.github.io/xml.js/">source</a>
-- jQuery to simplify coding: <a href="https://jquery.com/">source</a>
-- Parsing XML to JSON with xmlToJson: <a href="https://github.com/andrewhouser/xmlToJson">source</a>
+
+| Tool          | Use Case      | Location|
+| ------------- |:-------------:|:-----:|
+| Tutorial      | Got me started on the basics of routing. | <a href="https://medium.com/the-andela-way/how-to-build-a-basic-server-side-routing-system-in-php-e52e613cf241">source</a> |
+| PHP Documentation      | Where i got information from.      |  <a href="https://www.php.net/manual/en/">source</a>  |
+| Swagger |   API documentation.    | <a href="https://swagger.io/">source</a> |
+| PHPDoc |   PHP API Code documentation.    | <a href="https://www.phpdoc.org/">source</a> |
+| ChartJS |   Creation of JavaScript Graphs.    | <a href="https://www.chartjs.org/">source</a> |
+| AJV |   Draft-07 Json validation.    | <a href="https://github.com/epoberezkin/ajv">source</a> |
+| XML.js |   XSD XML validation.    | <a href="https://syssgx.github.io/xml.js/">source</a> |
+| jQuery |   Making JavaScript coding simpler.    | <a href="https://jquery.com/">source</a> |
+| xmlToJson |   Parsing XML to JSON    | <a href="https://github.com/andrewhouser/xmlToJson">source</a> |
 
 ## Roadmap for future releases
 ### Todo List
