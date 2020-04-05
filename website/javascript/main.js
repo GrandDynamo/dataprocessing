@@ -1,8 +1,16 @@
 
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+/**
+ * Set een cookie type.
+ * 
+ * @param {string} type 
+ */
+var contentType = document.cookie;
+if (contentType === "") {
+    contentType = "application/json";
+}
+function setContentType(type) {
+    contentType = (document.cookie = `application/${type}`);
+    location.reload();
 }
 
 /**
@@ -662,8 +670,6 @@ function triggerSlideStats() {
 
     }
 }
-
-var contentType = "json";
 var ajv = new Ajv({ coerceTypes: 'array' });
 
 /**
@@ -677,19 +683,19 @@ function getTopAnimeData() {
     $.ajax({
         url: "http://localhost/dataprocessing/api/v1/animes/top/10",
         type: 'GET',
-        contentType: `application/${contentType}`,
+        contentType: `${contentType}`,
         success: function (data, status, xhr) {
             var schemaLocation = null;
             var retrievedDataValidatable = data;
             var retrievedData = data;
-            if (contentType === 'xml') {
+            if (contentType === 'application/xml') {
                 retrievedDataValidatable = (new XMLSerializer()).serializeToString(retrievedData);
                 var parsedRetrievedData = xmlToJson.parse(data);
                 retrievedData = Object.entries(Object.entries(parsedRetrievedData)[0][1])[2][1];
                 schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
 
             }
-            else if (contentType === 'json') {
+            else if (contentType === 'application/json') {
                 schemaLocation = xhr.getResponseHeader('Link');
             }
             //The tags that need to be retrieved.
@@ -709,12 +715,12 @@ function getAnimeData(animeId) {
     $.ajax({
         url: `http://localhost/dataprocessing/api/v1/anime/${animeId}`,
         type: 'GET',
-        contentType: `application/${contentType}`,
+        contentType: `${contentType}`,
         success: function (data, status, xhr) {
             var schemaLocation = null;
             var retrievedDataValidatable = data;
             var retrievedData = data;
-            if (contentType === 'xml') {
+            if (contentType === 'application/xml') {
                 retrievedAnimeData2 = data;
 
                 newNode = retrievedAnimeData2.createElement("anime");
@@ -729,7 +735,7 @@ function getAnimeData(animeId) {
                 schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
 
             }
-            else if (contentType === 'json') {
+            else if (contentType === 'application/json') {
                 schemaLocation = xhr.getResponseHeader('Link');
             }
             //The tags that need to be retrieved.
@@ -753,12 +759,12 @@ function getGenderComparisonData(animeId) {
     $.ajax({
         url: `http://localhost/dataprocessing/api/v1/anime/${animeId}/gendercomparison/`,
         type: 'GET',
-        contentType: `application/${contentType}`,
+        contentType: `${contentType}`,
         success: function (data, status, xhr) {
             var schemaGenderLocation = null;
             var retrievedGenderData = data;
             var retrievedGenderDataValidatable = data;
-            if (contentType === 'xml') {
+            if (contentType === 'application/xml') {
                 retrievedGenderData = data;
                 retrievedGenderData2 = data;
                 //Add temp node so parsing goes right.
@@ -773,7 +779,7 @@ function getGenderComparisonData(animeId) {
                 schemaGenderLocation = Object.entries(Object.entries(parsedRetrievedGenderData)[0][1])[1][1];
 
             }
-            else if (contentType === 'json') {
+            else if (contentType === 'application/json') {
                 schemaGenderLocation = xhr.getResponseHeader('Link');
             }
             //The tags that need to be retrieved.
@@ -792,19 +798,19 @@ function getAnimeUsersStats(animeId) {
     $.ajax({
         url: `http://localhost/dataprocessing/api/v1/users/stats/anime/${animeId}`,
         type: 'GET',
-        contentType: `application/${contentType}`,
+        contentType: `${contentType}`,
         success: function (data, status, xhr) {
             var schemaLocation = null;
             var retrievedDataValidatable = data;
             var retrievedData = data;
-            if (contentType === 'xml') {
+            if (contentType === 'application/xml') {
                 retrievedDataValidatable = (new XMLSerializer()).serializeToString(retrievedData);
                 var parsedRetrievedData = xmlToJson.parse(data);
                 retrievedData = Object.entries(Object.entries(parsedRetrievedData)[0][1])[2][1];
                 schemaLocation = Object.entries(Object.entries(parsedRetrievedData)[0][1])[1][1];
 
             }
-            else if (contentType === 'json') {
+            else if (contentType === 'application/json') {
                 schemaLocation = xhr.getResponseHeader('Link');
             }
             //The tags that need to be retrieved.
@@ -833,12 +839,12 @@ function getSchema(schemaLocation, ) {
 
 //Validation of the retrieved data.
 function validation(retrievedData, schema) {
-    if (contentType === 'json') {
+    if (contentType === 'application/json') {
         console.log("JSON validation");
         console.log(ajv.validate(schema, retrievedData));
         return retrievedData;
     }
-    else if (contentType === 'xml') {
+    else if (contentType === 'application/xml') {
         console.log("XML validation");
         console.log(xmllint.validateXML({ xml: retrievedData, schema: schema }).errors);
         if (!xmllint.validateXML({ xml: retrievedData, schema: schema }).errors) {
