@@ -72,7 +72,8 @@ When you are on the PHPMyAdmin web-page start looking for the ```anime-db``` dat
 If it is filled with data, good job!
 
 <b>Step 10</b><br>
-To see if the API works, go visit the next location with your browser: ```http://localhost/dataprocessing/website/```. If the API works, you should be able to see nice looking graphs from the data that sits inside the database.
+To see if the API works, go visit the next location with your browser: ```http://localhost/dataprocessing/website/```. If the API works, you should be able to see nice looking graphs from the data that sits inside the database.<br>
+If you have errors or other things that may be related to database problems, you may try changing the database settings in the settings.json file located at: ```C:\xampp\htdocs\DataProcessing\server\api\v1\settings.json```.
 
 <b>Step 11</b><br>
 For the documentation of the API, i have used Swagger. It can be visited with your browser. The location of the API doc is: ```http://localhost/dataprocessing/doc/```.<br>
