@@ -1,14 +1,16 @@
 # MAL-API
-<i>(MyAnimeList-API)</i><br><br>
+<i>(MyAnimeList-API)</i><br>
 
-An API for my school assignment.
+An API for my school assignment.<br><br>
 
 ## Introduction
 <p>Welcome to the MAL-API. This project is made for a school assignment where i needed to process data from a database to a consumer application. The reason it is called 'MAL-API', is because i use data from MyAnimeList in my database and this API parses this data.</p>
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine. These instructions use Windows 10 as operating system.
+These instructions will get you a copy of the project up and running on your local machine. The operating system i used throughout the instructions is Windows 10. The browser i used is <a href="https://www.mozilla.org/en-US/firefox/windows/">FireFox</a><br>
+
+<b>Note:</b> There is also a video tutorial available on <a href="https://www.youtube.com/watch?v=acCZ-1Et0Mo">YouTube</a>.
 
 ### Software requisites
 There are a couple of things you will need before you can successfully run this API.
@@ -114,8 +116,4 @@ The resources i have used are displayed in the table beneath.
 ## Authors
 
 * **Tim Gels** - *Initial work* - [GitHub](https://github.com/GrandDynamo/)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
