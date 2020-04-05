@@ -101,9 +101,7 @@ The resources i have used are displayed in the table beneath.
 | xmlToJson |   Parsing XML to JSON    | <a href="https://github.com/andrewhouser/xmlToJson">source</a> |
 
 ## Roadmap for future releases
-### Todo List
 #### -Bugs
-
 - [ ] Empty values (in XML) nodes can be send to user when column does not exist.
 - [ ] When posting without body. Errors appear with status code 500.
 - [x] <strike>Routing class sends to many variables so the routing breaks when you have multiple variavles inside your URL path.</strike>
@@ -111,10 +109,9 @@ The resources i have used are displayed in the table beneath.
 
 
 #### -Features
-
 - [ ] Content-type negotiation.
 - [ ] Option to make it possible for queries to insert into database with key value pairs Now you can only insert with order. Need to somehow get key names into Mysql class.
-- [x] <strike>XML/JSON data switch on website. (It already accepts both)</strike>
+- [x] <strike>XML/JSON data switch on website. (It already accepts both).</strike>
 
 ## Authors
 
