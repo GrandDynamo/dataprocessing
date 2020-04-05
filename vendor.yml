@@ -1,2 +1,2 @@
-doc/* linguist-vendored
-website/libraries/* linguist-vendored
+vendors:
+- path: github.com/GrandDynamo/dataprocessing/tree/master/doc/*
