@@ -7,8 +7,8 @@ An API for my school assignment.<br><br>
 <p>Welcome to the MAL-API. This project is made for a school assignment where i needed to process data from a database to a consumer application. The reason it is called 'MAL-API', is because i use data from MyAnimeList in my database and this API parses this data.</p>
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine. The operating system i used throughout the instructions is Windows 10. The browser i used is <a href="https://www.mozilla.org/en-US/firefox/windows/">FireFox</a><br>
+These instructions will get you a copy of the project up and running on your local machine. Before you continue reading. I assume you have read the README.txt in my OneDrive folder. If not, please read it before continuing.<br>
+The operating system i used throughout the instructions is Windows 10. The browser i used is <a href="https://www.mozilla.org/en-US/firefox/windows/">FireFox</a><br>
 
 <b>Note:</b> There is also a video tutorial available on <a href="https://www.youtube.com/watch?v=acCZ-1Et0Mo">YouTube</a>.
 
@@ -103,17 +103,19 @@ The resources i have used are displayed in the table beneath.
 ## Roadmap for future releases
 ### Todo List
 #### -Bugs
-- Empty values (in XML) nodes can be send to user when column does not exist.
-- When using GET with invalid ID it returns code 400.
-- When posting without body. Errors appear with status code 500.
-- Empty strings reaches database and queries.
+
+- [ ] Empty values (in XML) nodes can be send to user when column does not exist.
+- [ ] When posting without body. Errors appear with status code 500.
+- [x] <strike>Routing class sends to many variables so the routing breaks when you have multiple variavles inside your URL path.</strike>
+- [ ] Empty strings reaches database and queries.
+
 
 #### -Features
-- Content-type negotiation.
-- Option to make it possible for queries to insert into database with key value pairs Now you can only insert with order. Need to somehow get key names into Mysql class.
-- XML/JSON data switch on website. (It already accepts both)
+
+- [ ] Content-type negotiation.
+- [ ] Option to make it possible for queries to insert into database with key value pairs Now you can only insert with order. Need to somehow get key names into Mysql class.
+- [x] <strike>XML/JSON data switch on website. (It already accepts both)</strike>
 
 ## Authors
 
 * **Tim Gels** - *Initial work* - [GitHub](https://github.com/GrandDynamo/)
-
