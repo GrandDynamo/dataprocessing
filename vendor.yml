@@ -1,2 +1,2 @@
-vendors:
-- path: github.com/GrandDynamo/dataprocessing/tree/master/doc/*
+doc/* linguist-vendored
+website/libraries/* linguist-vendored
