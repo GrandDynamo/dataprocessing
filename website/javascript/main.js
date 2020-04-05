@@ -675,7 +675,7 @@ var ajv = new Ajv({ coerceTypes: 'array' });
 getTopAnimeData();
 function getTopAnimeData() {
     $.ajax({
-        url: "http://localhost/dataprocessing/api/v1/topanimes/10",
+        url: "http://localhost/dataprocessing/api/v1/animes/top/10",
         type: 'GET',
         contentType: `application/${contentType}`,
         success: function (data, status, xhr) {
@@ -707,7 +707,7 @@ function getTopAnimeData() {
 
 function getAnimeData(animeId) {
     $.ajax({
-        url: `http://localhost/dataprocessing/api/v1/animes/${animeId}`,
+        url: `http://localhost/dataprocessing/api/v1/anime/${animeId}`,
         type: 'GET',
         contentType: `application/${contentType}`,
         success: function (data, status, xhr) {
@@ -751,7 +751,7 @@ function getAnimeData(animeId) {
 
 function getGenderComparisonData(animeId) {
     $.ajax({
-        url: `http://localhost/dataprocessing/api/v1/animes/${animeId}/gendercomparison/`,
+        url: `http://localhost/dataprocessing/api/v1/anime/${animeId}/gendercomparison/`,
         type: 'GET',
         contentType: `application/${contentType}`,
         success: function (data, status, xhr) {
@@ -790,7 +790,7 @@ function getGenderComparisonData(animeId) {
 }
 function getAnimeUsersStats(animeId) {
     $.ajax({
-        url: `http://localhost/dataprocessing/api/v1/animes/${animeId}/users/stats/`,
+        url: `http://localhost/dataprocessing/api/v1/users/stats/anime/${animeId}`,
         type: 'GET',
         contentType: `application/${contentType}`,
         success: function (data, status, xhr) {

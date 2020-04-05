@@ -1,0 +1,509 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MAL-API",
+    "description": "Welcome to the documentation about the MAL-API. I have written this API (including this documentation) for a school assignment. You can find more information about the API, its schemas and the roadmap on my <a href=\"https://github.com/GrandDynamo/dataprocessing\" target=\"_blank\">GitHub</a> page that is linked beneath this introduction text. <br><br> Just to put it out there. At the time of writing this documentation, i have spend around <b>300</b> Hours on this project. That sounds crazy (and it is) for just a school assignment. But since the beginning i have larger plans for the back-end code of the API than just using it for the assignment. I have learned alot and will keep learning things to expand this API codebase for future projects and uses. <br><br> <b>Oh no,</b> i have been drifting off-topic. <br> Anyways, i just wanted to say that i liked working on this assignment and i hope that my hard work is going to pay off.",
+    "contact": {
+      "email": "tim.gels@student.nhlstenden.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Visit the GitHub project",
+    "url": "https://github.com/GrandDynamo/dataprocessing"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/dataprocessing/api/v1/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Anime",
+      "description": "Access Anime data."
+    },
+    {
+      "name": "User",
+      "description": "Access User data."
+    },
+    {
+      "name": "Rating",
+      "description": "Access Rating data."
+    }
+  ],
+  "paths": {
+    "/animes": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Retrieve data from all anime in the Database.",
+        "description": "Returns data about every Anime.",
+        "operationId": "getAllAnimes",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/anime/{animeId}": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Find Anime by ID",
+        "description": "Returns data about a single Anime.",
+        "operationId": "getAnimeById",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "description": "ID of Anime to return.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Update an existing Anime.",
+        "operationId": "updateAnime",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "description": "The ID of an Anime.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Fill in the details about the Anime you want to update in the database.",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Anime is added to the Database.",
+            "content": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Deletes an Anime.",
+        "operationId": "deleteAnimeById",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "description": "The ID of the Anime to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/anime/{animeId}/gendercomparison": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Retrieve gender comparison of Anime.",
+        "description": "Returns gender information about the viewersbase of the given Anime.",
+        "operationId": "getNumberOfMaleFemaleUsers",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "description": "The ID of an Anime.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/animes/gendercomparison": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Retrieve total gender comparison of all Animes combined.",
+        "description": "Returns gender information about the viewersbase of all Animes combined.",
+        "operationId": "getAllNumberOfMaleFemaleViewers",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/animes/top/{amount}": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Retrieve data from the top viewed Animes.",
+        "description": "Returns data from the top viewed Animes. The amount of Animes to be returned is selected with the parameter variable. The Data from the Animes are returned in a descending order based on views.",
+        "operationId": "getTopAnimesGivenAmount",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "path",
+            "description": "The number of Anime to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/animes/top": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Retrieve data from the top viewed Animes.",
+        "description": "Returns data from the top viewed Animes. The amount of Animes to be returned is selected with the parameter variable. The Data from the Animes are returned in a descending order based on views.",
+        "operationId": "getAllTopAnimes",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/anime": {
+      "post": {
+        "tags": [
+          "Anime"
+        ],
+        "summary": "Add a new Anime to the Database.",
+        "operationId": "addAnimeToDatabase",
+        "requestBody": {
+          "description": "Fill in the details about the Anime you want to add to the database.",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Anime is added to the Database.",
+            "content": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/stats/anime/{animeId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieve user data who watched the given Anime.",
+        "description": "Returns information about all the users that have watched the given Anime.",
+        "operationId": "getAnimeUsersStatistics",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "description": "The ID of an Anime.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieve data from all users.",
+        "description": "Returns information about all the users.",
+        "operationId": "getAllUsersStatistics",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid path.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Insert a new user to the Database.",
+        "description": "Adds a new user to the Database with the given body data.",
+        "operationId": "postUser",
+        "requestBody": {
+          "description": "Fill in the details about the user you want to add to the database.",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Anime is added to the Database.",
+            "content": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates an existing user in the Database.",
+        "description": "Updates the data from an existing User in the Databse with new provided body data.",
+        "operationId": "putUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The ID of a User.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Fill in the details about the user you want to add to the database.",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Anime is added to the Database.",
+            "content": {}
+          },
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deletes a User.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The ID of the User to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/ratings/animes/{animeId}/above/{rating}": {
+      "get": {
+        "tags": [
+          "Rating"
+        ],
+        "description": "Retrieve all ratings from the selected Anime from users that are higher than the specified number.",
+        "summary": "Get Anime ratings that are higher than the filled in rating.",
+        "operationId": "getAnimeRatingsAbove",
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The ID of the Anime."
+          },
+          {
+            "name": "rating",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "The minimum rating."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/ratings/above/{rating}": {
+      "get": {
+        "tags": [
+          "Rating"
+        ],
+        "description": "Retrieve all ratings from from users that are higher than the specified number.",
+        "summary": "Get all ratings with a score above the selected.",
+        "operationId": "getAllRatingsAbove",
+        "parameters": [
+          {
+            "name": "rating",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Minimum score of the ratings to be retrieved."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  }
+}
