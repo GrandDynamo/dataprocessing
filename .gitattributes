@@ -1,1 +1,3 @@
+doc/* linguist-vendored
 website/libraries/* linguist-vendored
+database/* linguist-vendored
