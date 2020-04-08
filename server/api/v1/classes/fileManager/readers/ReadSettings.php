@@ -18,7 +18,7 @@ class ReadSettings implements Readable
      */
     public function readFile(string $filePath): void
     {
-        $handle = $handle = fopen($filePath, "r");
+        $handle = fopen($filePath, "r");
         $this->contents = fread($handle, filesize($filePath));
         fclose($handle);
     }
