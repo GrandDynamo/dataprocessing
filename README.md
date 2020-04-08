@@ -99,7 +99,8 @@ The resources i have used are displayed in the table beneath.
 | AJV |   Draft-07 Json validation.    | <a href="https://github.com/epoberezkin/ajv">source</a> |
 | XML.js |   XSD XML validation.    | <a href="https://syssgx.github.io/xml.js/">source</a> |
 | jQuery |   Making JavaScript coding simpler.    | <a href="https://jquery.com/">source</a> |
-| xmlToJson |   Parsing XML to JSON    | <a href="https://github.com/andrewhouser/xmlToJson">source</a> |
+| xmlToJson |   Parsing XML to JSON.    | <a href="https://github.com/andrewhouser/xmlToJson">source</a> |
+| Kaggle |   Getting the dataset.    | <a href="https://www.kaggle.com/azathoth42/myanimelist">source</a> |
 
 ## Roadmap for future releases
 #### -Bugs
@@ -107,7 +108,6 @@ The resources i have used are displayed in the table beneath.
 - [ ] When posting without body. Errors appear with status code 500.
 - [x] <strike>Routing class sends to many variables so the routing breaks when you have multiple variavles inside your URL path.</strike>
 - [ ] Empty strings reaches database and queries.
-
 
 #### -Features
 - [ ] Content-type negotiation.
